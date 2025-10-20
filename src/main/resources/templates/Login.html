@@ -10,8 +10,10 @@
 
 <body>
     <div class="background">
+
         <div class="login-contenedor">
             <div class="cont-izquierdo">
+
                 <h2 id="titulo">INICIO DE SESIÓN</h2>
                 <form action="/login" method="post">
                     <label for="usuario">Usuario:</label>
@@ -19,22 +21,29 @@
 
                     <label for="contrasena">Contraseña:</label>
                     <input type="password" id="password" name="password">
+                    <div class="boton-contenedor">
+                        <p class="regresar"><a href="/homePage">Regresar</a></p>
+                        <button type="submit">Iniciar Sesión</button>
+                    </div>
 
-                    <button type="submit">Iniciar Sesión</button>
                 </form>
+
                 <div th:if="${error}" style="color:red; margin-top: 10px;">
                     <p th:text="${error}"></p>
                 </div>
-                <p class="registro-link">¿No está registrado? <a href="/register">Hágalo aquí</a></p>
+                    <p class="registro-link">¿No está registrado? <a href="/register">Hágalo aquí</a></p>
+
                 <div th:if="${param.error}">
                     <p style="color: red;">Usuario o contraseña incorrectos</p>
                 </div>
             </div>
             <div class="cont-derecho">
-
+                
             </div>
         </div>
+
     </div>
+
 
 </body>
 

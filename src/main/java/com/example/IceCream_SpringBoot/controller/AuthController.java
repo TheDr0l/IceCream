@@ -14,6 +14,11 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    @GetMapping("/")
+    public String root() {
+        return "redirect:/homePage";
+    }
+
     @GetMapping("/login")
     public String showLoginPage() {
         return "Login";
@@ -42,6 +47,11 @@ public class AuthController {
             model.addAttribute("error", "Error al registrar el usuario. Inténtalo de nuevo.");
             return "Registro";
         }
+    }
+
+    @GetMapping("/homePage")
+    public String homePage() {
+        return "homePage";
     }
 
     @GetMapping("/home")

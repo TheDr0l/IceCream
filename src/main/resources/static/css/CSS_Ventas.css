@@ -1,41 +1,66 @@
-html, body {
+/* ====== CONTENIDO PRINCIPAL ====== */
+.content-area {
+    flex: 1;
     height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-.background {
-    background-image: url("/img/home.webp");
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.box {
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    width: 90%;
-    max-width: 1200px;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 40px;
     overflow-y: auto;
-    max-height: 90vh;
 }
 
-h2 {
-    text-align: center;
+.pagination-wrapper {
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.pagination {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+
+/* ====== TÍTULO ====== */
+.content-area h2 {
+    font-size: 30px;
     font-weight: bold;
+    color: #1d1a1ade;
+    margin-bottom: 30px;
+    background: rgb(255, 255, 255);
+    padding: 15px 25px;
+    border-radius: 12px;
+    display: inline-block;
+    backdrop-filter: blur(4px);
+    animation: fadeInUp 0.6s ease forwards;
 }
 
+/* TABLA */
 .table {
-    margin-top: 20px;
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: fadeInUp 0.7s ease forwards;
 }
 
+.table thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 16px;
+}
+
+.table th,
+.table td {
+    vertical-align: middle;
+    text-align: center;
+    font-size: 15px;
+    padding: 14px;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(118, 75, 162, 0.07);
+    transition: 0.3s;
+}
+
+/* LISTA DE DETALLE */
 ul {
     padding-left: 20px;
     margin: 0;
@@ -43,16 +68,110 @@ ul {
 
 ul li {
     list-style-type: disc;
+    color: #4a5568;
+    text-align: left;
+    font-size: 14px;
 }
 
-button {
-    margin-top: 20px;
+/* BOTONES*/
+.d-flex button {
+    font-weight: bold;
+    border-radius: 10px;
+    transition: all 0.3s ease;
 }
 
 .btn-primary {
-    margin-right: 30px;
+    background: linear-gradient(135deg, #00b4d8 0%, #0096c7 100%);
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    margin-right: 10px;
 }
 
-#boton-anterior {
-    margin-right: 5px;
+.btn-primary:hover {
+    background: linear-gradient(135deg, #0096c7 0%, #0077b6 100%);
+    transform: translateY(-3px);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #52b788 0%, #40916c 100%);
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 25px;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #40916c 0%, #2d6a4f 100%);
+    transform: translateY(-3px);
+}
+
+/* BOTON REGRESAR */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.top-right-button {
+    position: relative;
+}
+
+.top-right-button button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.btn-secondary {
+    background: #ff6b6b;
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: white;
+    color: black;
+    transform: translateY(-3px);
+}
+
+/* ANIMACION  */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 80px;
+        padding: 20px 10px;
+    }
+
+    .content-area {
+        padding: 20px;
+    }
+
+    .content-area h2 {
+        font-size: 22px;
+    }
+
+    .table th, .table td {
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    .btn-primary, .btn-secondary {
+        padding: 8px 18px;
+        font-size: 14px;
+    }
 }

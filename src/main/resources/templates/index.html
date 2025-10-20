@@ -9,149 +9,241 @@
 </head>
 
 <body>
-    <div class="background">
-        <div class="box">
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div th:replace="sidebar :: sidebar"></div>
+        </div>
 
-            <h1 class="titulo">
-                <img src="/img/titulo.png" alt="">
-            </h1>
-
-            <div class="containerBotones">
-                <!-- Boton Agregar helados al almacen -->
-                <button type="button" class="botonIcono" data-bs-toggle="modal" data-bs-target="#modalAlmacen">
-                    <img src="/img/almacen.png" alt="Icono">
-                    <p id="pAgregar">Agregar Helados <br>al almacen interno</p>
-                </button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="modalAlmacen" data-bs-backdrop="static" data-bs-keyboard="false"
-                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h2 class="modal-title fs-5" id="staticBackdropLabel">Agregar Helados</h2>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="/agregarAlAlmacen" method="POST">
-
-                                    <label class="form-label" for="nombre">Nombre:</label>
-                                    <input class="form-control form-control-lg" type="text"
-                                        aria-label=".form-control-lg example" id="nombre" name="nombre" required>
-
-                                    <label class="form-label" for="sabor">Sabor:</label>
-                                    <input class="form-control form-control-lg" type="text"
-                                        aria-label=".form-control-lg example" id="sabor" name="sabor" required>
-
-                                    <label class="form-label" for="sabor">Tipo:</label>
-                                    <input class="form-control form-control-lg" type="text"
-                                        aria-label=".form-control-lg example" id="tipo" name="tipo" required>
-
-                                    <label class="form-label" for="precio">Precio:</label>
-                                    <input class="form-control form-control-lg" type="number"
-                                        aria-label=".form-control-lg example" id="precio" name="precio"
-                                        datatype="number" min="1" required>
-
-                                    <label class="form-label" for="unidades">Unidades:</label>
-                                    <input class="form-control form-control-lg" type="number"
-                                        aria-label=".form-control-lg example" id="unidades" name="unidades"
-                                        datatype="number" min="1" required><br>
-
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar
-                                        </button>
-                                        <button type="submit" class="btn btn-primary">Guardar</button>
-                                    </div>
-
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Boton Mover a Heladeria -->
-                <button type="button" class="botonIcono" onclick="location.href='/moverHelado'">
-                    <img src="/img/heladeria.png" alt="Icono">
-                    <p>Mover helados al <br>Mostrador</p>
-                </button>
-
-
-                <!-- Boton Vender Helados 
-            <button type="button" class="botonIcono" data-bs-toggle="modal" onclick="location.href='/venderHelados'">
-                <img src="/img/venderHelado.png" alt="Icono">
-                <p>Vender Helados</p>
-            </button> -->
-
-                <!-- Boton Mostrar Helados -->
-                <button type="button" class="botonIcono" data-bs-toggle="modal" data-bs-target="#modalMostrar">
-                    <img src="/img/mostrarHelado.png" alt="Icono">
-                    <p>Mostrar Helados</p>
-                </button>
-                <!-- Modal -->
-                <div class="modal fade" id="modalMostrar" data-bs-backdrop="static" data-bs-keyboard="false"
-                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content" id="modalInterno">
-                            <div class="modal-header">
-                                <h2 class="modal-title fs-5" id="staticBackdropLabel">Mostrar Helados</h2>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-
-                            <div class="modal-body" id="iconosDeMostrar">
-                                <a href="/heladosAlmacen" class="botonIcono">
-                                    <img src="/img/almacen.png" alt="Icono">
-                                    <p>Almacen</p>
-                                </a>
-                                <a href="/heladosHeladeria" class="botonIcono">
-                                    <img src="/img/heladeria.png" alt="Icono">
-                                    <p>Heladeria</p>
-                                </a>
-                                <a href="/registroVentas" class="botonIcono">
-                                    <img src="/img/ventasRegistradas.png" alt="Icono">
-                                    <p>Ultimas Ventas</p>
-                                </a>
-                                <a href="/reporte" class="botonIcono">
-                                    <img src="/img/reporte.png" alt="Icono">
-                                    <p>Reporte</p>
-                                </a>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Cancelar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Boton Editar Helados -->
-                <button type="button" class="botonIcono" onclick="location.href='/editarHelado'">
-                    <img src="/img/editarHelado.png" alt="Icono">
-                    <p>Editar Helados</p>
-                </button>
-
-                <!-- Boton Eliminar Helados -->
-                <button type="button" class="botonIcono" data-bs-toggle="modal"
-                    onclick="location.href='/eliminarHelado'">
-                    <img src="/img/eliminarHelado.png" alt="Icono">
-                    <p>Eliminar Helados</p>
-                </button>
-
-                <!-- Boton Cerrar Sesion -->
-                <a href="/logout" class="botonIcono">
-                    <img src="/img/cerrarSesion.png" alt="Icono">
-                    <p>Cerrar Sesion</p>
-                </a>
+        <!-- Content Area -->
+        <div class="content-area">
+            <div class="content-header">
+                <h1>Panel de Control</h1>
+                <p>Gestiona tu inventario de helados de manera eficiente</p>
             </div>
-            <img src="/img/helado cool.png" class="marca" alt="">
+
+            <div class="cards-grid">
+                <div class="action-card" onclick="location.href='/agregarAlAlmacen'">
+                    <div class="action-card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-building-warehouse">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M3 21v-13l9 -4l9 4v13" />
+                            <path d="M13 13h4v8h-10v-6h6" />
+                            <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" />
+                        </svg>
+                    </div>
+                    <h3>Agregar al Almacén</h3>
+                    <p>Registra nuevos helados en el inventario interno</p>
+                </div>
+
+                <div class="action-card" onclick="location.href='/moverHelado'">
+                    <div class="action-card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-forklift">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M5 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                            <path d="M14 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                            <path d="M7 17l5 0" />
+                            <path d="M3 17v-6h13v6" />
+                            <path d="M5 11v-4h4" />
+                            <path d="M9 11v-6h4l3 6" />
+                            <path d="M22 15h-3v-10" />
+                            <path d="M16 13l3 0" />
+                        </svg>
+                    </div>
+                    <h3>Mover a Mostrador</h3>
+                    <p>Transfiere helados del almacén al mostrador</p>
+                </div>
+
+                <div class="action-card" onclick="location.href='/reporteOpciones'">
+                    <div class="action-card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-chart-bar">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                            <path d="M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                            <path d="M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                            <path d="M4 20h14" />
+                        </svg>
+                    </div>
+                    <h3>Ver Reportes</h3>
+                    <p>Consulta inventarios y ventas registradas</p>
+                </div>
+
+                <div class="action-card" onclick="location.href='/editarHelado'">
+                    <div class="action-card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                            <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                            <path d="M16 5l3 3" />
+                        </svg>
+                    </div>
+                    <h3>Editar Helados</h3>
+                    <p>Modifica la información de los productos</p>
+                </div>
+
+                <div class="action-card" onclick="location.href='/eliminarHelado'">
+                    <div class="action-card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M4 7l16 0" />
+                            <path d="M10 11l0 6" />
+                            <path d="M14 11l0 6" />
+                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                        </svg>
+                    </div>
+                    <h3>Eliminar Helados</h3>
+                    <p>Elimina productos del sistema</p>
+                </div>
+
+                <div class="action-card" onclick="location.href='/logout'">
+                    <div class="action-card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-logout">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                            <path d="M9 12h12l-3 -3" />
+                            <path d="M18 15l3 -3" />
+                        </svg>
+                    </div>
+                    <h3>Cerrar Sesión</h3>
+                    <p>Salir del sistema de manera segura</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Mostrar Opciones -->
+    <div class="modal fade" id="modalMostrar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title fs-5">Ver Información</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="cards-grid" style="padding: 20px;">
+                        <a href="/heladosAlmacen" class="action-card" style="text-decoration: none;">
+                            <div class="action-card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-building-warehouse">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M3 21v-13l9 -4l9 4v13" />
+                                    <path d="M13 13h4v8h-10v-6h6" />
+                                    <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" />
+                                </svg>
+                            </div>
+                            <h3>Almacén</h3>
+                            <p>Ver inventario del almacén</p>
+                        </a>
+                        <a href="/heladosHeladeria" class="action-card" style="text-decoration: none;">
+                            <div class="action-card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-building-store">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M3 21l18 0" />
+                                    <path
+                                        d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" />
+                                    <path d="M5 21l0 -10.15" />
+                                    <path d="M19 21l0 -10.15" />
+                                    <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" />
+                                </svg>
+                            </div>
+                            <h3>Heladería</h3>
+                            <p>Ver helados en mostrador</p>
+                        </a>
+                        <a href="/registroVentas" class="action-card" style="text-decoration: none;">
+                            <div class="action-card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-report-money">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                                    <path
+                                        d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                                    <path d="M14 11h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+                                    <path d="M12 17v1m0 -8v1" />
+                                </svg>
+                            </div>
+                            <h3>Últimas Ventas</h3>
+                            <p>Historial de ventas</p>
+                        </a>
+                        <a href="/reporte" class="action-card" style="text-decoration: none;">
+                            <div class="action-card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-chart-histogram">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M3 3v18h18" />
+                                    <path d="M20 18v3" />
+                                    <path d="M16 16v5" />
+                                    <path d="M12 13v8" />
+                                    <path d="M8 16v5" />
+                                    <path d="M3 11c6 0 5 -5 9 -5s3 5 9 5" />
+                                </svg>
+                            </div>
+                            <h3>Reporte</h3>
+                            <p>Análisis y estadísticas</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById("btnPagar").onclick = async () => {
+            // Llamamos al endpoint GET que ya funciona y devuelve el enlace (texto)
+            const res = await fetch("/api/pago/mercado");
+            if (!res.ok) {
+                alert("Error al generar el pago: " + res.status);
+                return;
+            }
+            const url = await res.text(); // tu endpoint devuelve el link como texto
+            if (!url) {
+                alert("No se generó la URL de Mercado Pago");
+                return;
+            }
+            window.location.href = url;
+        };
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const links = document.querySelectorAll('.menu-item[href]');
+            const currentUrl = window.location.pathname;
+
+            links.forEach(link => {
+                if (link.getAttribute('href') === currentUrl) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
 
 </body>
 

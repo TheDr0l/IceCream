@@ -1,0 +1,84 @@
+/* Zona de contenido */
+.content-area {
+    flex: 1;
+    height: 100%;
+    padding: 40px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Animación de aparición */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Botón regresar */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-secondary {
+    background: #ff6b6b;
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: white;
+    color: black;
+    transform: translateY(-3px);
+    border: 1px solid #ccc;
+}
+
+/* Estilo del iframe */
+iframe {
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    border: none;
+    width: 100%;
+    height: 100%;
+    max-height: 600px;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Responsive para pantallas medianas */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 80px;
+        padding: 20px 10px;
+    }
+
+    .content-area {
+        padding: 20px;
+    }
+
+    .btn-secondary {
+        padding: 8px 20px;
+        font-size: 14px;
+    }
+
+    iframe {
+        height: 400px;
+    }
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 576px) {
+    iframe {
+        height: 300px;
+    }
+}

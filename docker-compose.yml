@@ -7,7 +7,7 @@ services:
       - "8080:8080"
     environment:
       # Configuracion para MySQL (Azure Flexible Server)
-      SPRING_DATA_MYSQL_URI: jdbc:mysql://mysql-icecream.mysql.database.azure.com:3306/icecream_db?useSSL=true&requireSSL=false
+      SPRING_DATA_MYSQL_URI: jdbc:mysql://icecream7mysql.mysql.database.azure.com:3306/db_icecream?useSSL=true&requireSSL=false
       MYSQL_USER: dilan
       MYSQL_PASSWORD: Admin#0717
 
