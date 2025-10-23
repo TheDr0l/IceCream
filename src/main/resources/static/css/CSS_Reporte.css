@@ -58,7 +58,7 @@ iframe {
 /* Responsive para pantallas medianas */
 @media (max-width: 992px) {
     .sidebar {
-        width: 80px;
+        width: 70px;
         padding: 20px 10px;
     }
 

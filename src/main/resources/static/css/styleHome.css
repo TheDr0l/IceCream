@@ -225,7 +225,7 @@ body {
 /* Responsive */
 @media (max-width: 768px) {
     .sidebar {
-        width: 80px;
+        width: 60px;
         padding: 20px 10px;
     }
 
@@ -242,6 +242,9 @@ body {
 
     .menu-item-icon {
         margin-right: 0;
+    }
+    .content-area {
+        padding: 20px;
     }
 }
 
