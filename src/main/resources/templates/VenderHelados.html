@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -17,6 +17,12 @@
 
         <form id="ventaForm" action="/venderHelados" method="post" class="form-venta">
             <h2 class="mb-4 text-gradient">Vender Helados</h2>
+            <div th:if="${mensaje}" class="alert alert-success mt-2" role="alert">
+                <span th:text="${mensaje}"></span>
+            </div>
+            <div th:if="${error}" class="alert alert-danger mt-2" role="alert">
+                <span th:text="${error}"></span>
+            </div>
 
             <div class="mb-3">
                 <label for="tipoFiltro" class="form-label">Filtrar por tipo:</label>
@@ -37,7 +43,8 @@
                     <div class="col helado-col" th:data-tipo="${helado.tipo}">
                         <div class="card helado-card" th:data-nombre="${helado.nombre}"
                             th:data-unidades="${helado.unidades}" th:data-precio="${helado.precio}"
-                            th:data-tipo-helado="${helado.tipo}">
+                            th:data-tipo-helado="${helado.tipo}" onclick="prepararParaAgregar(this)"
+                            style="cursor: pointer;">
                             <img th:src="@{'/img/' + ${helado.tipo} + '.png'}"
                                 onerror="this.onerror=null; this.src='/img/default.png';"
                                 class="card-img-top helado-img" alt="helado">
@@ -46,6 +53,7 @@
                                 <p class="card-text small mb-0" th:text="'$' + ${helado.precio}"></p>
                                 <p class="card-text small" th:text="'Disp: ' + ${helado.unidades}"></p>
                             </div>
+
                         </div>
                     </div>
                 </th:block>
@@ -125,6 +133,7 @@
                     Sesión</button>
                 <button type="submit" class="btn btn-primary">Vender</button>
             </div>
+            <div id="carritoCamposOcultos"></div>
         </form>
     </div>
 
@@ -341,12 +350,33 @@
             });
 
             // Validación antes de enviar el formulario
-            document.getElementById("formVenta").addEventListener("submit", function (e) {
+            document.getElementById("ventaForm").addEventListener("submit", function (e) {
                 if (carrito.length === 0) {
                     e.preventDefault();
                     mostrarError('errorCarrito', "Agrega al menos un helado al carrito.");
+                    return;
                 }
+
+                // Limpia los campos ocultos previos
+                const divCampos = document.getElementById("carritoCamposOcultos");
+                divCampos.innerHTML = "";
+
+                // Crea los inputs ocultos con la información del carrito
+                carrito.forEach((item, index) => {
+                    const inputNombre = document.createElement("input");
+                    inputNombre.type = "hidden";
+                    inputNombre.name = "nombresHelados";
+                    inputNombre.value = item.nombre;
+                    divCampos.appendChild(inputNombre);
+
+                    const inputCantidad = document.createElement("input");
+                    inputCantidad.type = "hidden";
+                    inputCantidad.name = "unidadesVenderLista";
+                    inputCantidad.value = item.cantidad;
+                    divCampos.appendChild(inputCantidad);
+                });
             });
+
         });
     </script>
 

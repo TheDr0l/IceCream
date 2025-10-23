@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.example.IceCream_SpringBoot.model.Cliente;
 import com.example.IceCream_SpringBoot.model.HeladoDocument;
 import com.example.IceCream_SpringBoot.model.VentaDocument;
@@ -57,18 +59,17 @@ public class VentaController {
             @RequestParam String cedula,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaNacimiento,
             @RequestParam String telefono,
-            Model model,
+            RedirectAttributes redirectAttributes, // ← AGREGAR ESTO
             Principal principal) {
 
         String vendedor = principal.getName();
 
         // Validacion basica en el controlador
-        if (nombresHelados == null || unidadesVenderLista == null || nombresHelados.size() != unidadesVenderLista.size()
-                || nombresHelados.isEmpty()) {
-            model.addAttribute("error", "Error en los datos de los helados enviados. Intente de nuevo.");
-            List<HeladoDocument> listaHelados = heladoService.getListaHeladeria();
-            model.addAttribute("helados", listaHelados);
-            return "VenderHelados";
+        if (nombresHelados == null || unidadesVenderLista == null ||
+                nombresHelados.size() != unidadesVenderLista.size() || nombresHelados.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error",
+                    "Error en los datos de los helados enviados. Intente de nuevo.");
+            return "redirect:/venderHelados"; // ← CAMBIAR A REDIRECT
         }
 
         boolean success = ventaService.procesarVenta(
@@ -83,16 +84,13 @@ public class VentaController {
                 vendedor);
 
         if (success) {
-            model.addAttribute("mensaje", "¡Venta realizada con éxito!");
+            redirectAttributes.addFlashAttribute("mensaje", "¡Venta realizada con éxito!");
         } else {
-            model.addAttribute("error",
+            redirectAttributes.addFlashAttribute("error",
                     "Error al procesar la venta. Verifique el stock, los helados seleccionados o el total general.");
         }
 
-        List<HeladoDocument> listaHeladosActualizada = heladoService.getListaHeladeria();
-        model.addAttribute("helados", listaHeladosActualizada);
-
-        return "VenderHelados";
+        return "redirect:/venderHelados"; // ← CAMBIAR A REDIRECT
     }
 
     @GetMapping("/buscarCliente")

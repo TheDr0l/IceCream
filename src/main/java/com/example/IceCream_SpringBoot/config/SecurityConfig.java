@@ -54,7 +54,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         // público
-                        .requestMatchers("/","/homePage","/login", "/register", "/css/**", "/img/**").permitAll()
+                        .requestMatchers("/","/homePage","/login", "/css/**", "/img/**").permitAll()
                         // rutas de ventas: solo USER
                         .requestMatchers("/venderHelados", "/venderHelados/**", "/buscarCliente").hasRole("USER")
                         //Todo lo demas: ADMIN

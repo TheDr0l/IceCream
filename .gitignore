@@ -34,3 +34,5 @@ build/
 
 mysql-data-local/*.sock
 mysql-data-local/
+
+.env

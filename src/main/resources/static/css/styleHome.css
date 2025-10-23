@@ -229,7 +229,7 @@ body {
         padding: 20px 10px;
     }
 
-    .sidebar-header h1,
+    .sidebar-header h1 span,
     .sidebar-header p,
     .menu-item-text {
         display: none;

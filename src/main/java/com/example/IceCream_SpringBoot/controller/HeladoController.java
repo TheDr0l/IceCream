@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -35,31 +36,24 @@ public class HeladoController {
             @RequestParam String tipo,
             @RequestParam double precio,
             @RequestParam int unidades,
-            Model model) {
-
-        List<HeladoDocument> helados = heladoService.getListaAlmacen();
-        int totalHelados = helados.size();
-        int totalUnidades = helados.stream().mapToInt(HeladoDocument::getUnidades).sum();
-
-        model.addAttribute("totalHelados", totalHelados);
-        model.addAttribute("totalUnidades", totalUnidades);
+            RedirectAttributes redirectAttributes) {
 
         if (heladoService.heladoExiste(nombre)) {
-            model.addAttribute("error", "El nombre del helado ya existe.");
-            return "agregarAlAlmacen";
+            redirectAttributes.addFlashAttribute("error", "El nombre del helado ya existe.");
+            return "redirect:/agregarAlAlmacen";
         }
 
         boolean success = heladoService.agregarAlAlmacen(nombre, sabor, tipo, precio, unidades);
         if (success) {
-            model.addAttribute("mensaje", "Helado agregado correctamente.");
+            redirectAttributes.addFlashAttribute("mensaje", "Helado agregado correctamente.");
         } else {
-            model.addAttribute("error", "Error al registrar el helado. Inténtalo de nuevo.");
+            redirectAttributes.addFlashAttribute("error", "Error al registrar el helado. Inténtalo de nuevo.");
         }
 
-        return "agregarAlAlmacen";
+        return "redirect:/agregarAlAlmacen";
     }
 
-    // 2) Formulario y POST para mover del almacén a la heladería
+    // 2) Mover helado del almacén a la heladería
     @GetMapping("/moverHelado")
     public String mostrarFormularioMoverHelado(Model model) {
         model.addAttribute("helados", heladoService.getListaAlmacen());
@@ -69,18 +63,18 @@ public class HeladoController {
     @PostMapping("/moverHelado")
     public String moverHelado(@RequestParam String nombreHelado,
             @RequestParam int unidadesMover,
-            Model model) {
+            RedirectAttributes redirectAttributes) {
 
         boolean success = heladoService.moverHeladoAHeladeria(nombreHelado, unidadesMover);
 
         if (success) {
-            model.addAttribute("mensaje", "Helado movido correctamente a la heladería.");
+            redirectAttributes.addFlashAttribute("mensaje", "Helado movido correctamente a la heladería.");
         } else {
-            model.addAttribute("error", "Error al mover el helado. Verifica las unidades disponibles.");
+            redirectAttributes.addFlashAttribute("error",
+                    "Error al mover el helado. Verifica las unidades disponibles.");
         }
 
-        model.addAttribute("helados", heladoService.getListaAlmacen());
-        return "MoverAheladeria";
+        return "redirect:/moverHelado";
     }
 
     // 3) Listados de inventario
@@ -129,18 +123,18 @@ public class HeladoController {
             @RequestParam String tipo,
             @RequestParam int unidades,
             @RequestParam double precio,
-            Model model) {
+            RedirectAttributes redirectAttributes) {
 
         boolean success = heladoService.editarHelado(
                 ubicacion, nombreOriginal, nombreNuevo, sabor, tipo, unidades, precio);
 
         if (success) {
-            model.addAttribute("mensaje", "Helado editado correctamente.");
+            redirectAttributes.addFlashAttribute("mensaje", "Helado editado correctamente.");
         } else {
-            model.addAttribute("error", "Error al editar el helado.");
+            redirectAttributes.addFlashAttribute("error", "Error al editar el helado.");
         }
 
-        return "EditarHelado";
+        return "redirect:/editarHelado";
     }
 
     // 6) Eliminar helado
@@ -152,17 +146,18 @@ public class HeladoController {
     @PostMapping("/eliminarHelado")
     public String eliminarHelado(@RequestParam String ubicacion,
             @RequestParam String nombre,
-            Model model) {
+            RedirectAttributes redirectAttributes) {
+
         boolean success = heladoService.eliminarHelado(ubicacion, nombre);
 
         if (success) {
-            model.addAttribute("mensaje", "El helado \"" + nombre + "\" fue eliminado exitosamente.");
+            redirectAttributes.addFlashAttribute("mensaje", "El helado \"" + nombre + "\" fue eliminado exitosamente.");
         } else {
-            model.addAttribute("error", "No se pudo eliminar el helado \"" + nombre + "\". Intenta nuevamente.");
+            redirectAttributes.addFlashAttribute("error",
+                    "No se pudo eliminar el helado \"" + nombre + "\". Intenta nuevamente.");
         }
 
-        model.addAttribute("helados", heladoService.getListaAlmacen()); // Opcional
-        return "EliminarHelado";
+        return "redirect:/eliminarHelado";
     }
 
     // 7) Manejo de parámetros faltantes
@@ -181,6 +176,7 @@ public class HeladoController {
         return "ErrorGeneral";
     }
 
+    // 8) Reportes
     @GetMapping("/reporte")
     public String verReporte() {
         return "reporte";

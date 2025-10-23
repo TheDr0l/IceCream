@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Usuarios Internos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styleHome.css">
+    <link rel="stylesheet" href="/css/CSS_AgregarAlAlmacen.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div th:replace="sidebar :: sidebar"></div>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="content-area">
+            <div class="content-header">
+                <h1>Usuarios Internos</h1>
+                <p>Administradores y Vendedores</p>
+            </div>
+
+            <!-- Mensaje de Éxito -->
+            <div th:if="${mensaje}" class="alert alert-primary alert-dismissible fade show mt-3" role="alert">
+                <span th:text="${mensaje}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+
+            <!-- Mensaje de Error -->
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                <span th:text="${error}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="form-container">
+                <!-- Formulario -->
+                <form action="/panelUsuariosInternos" method="POST" class="add-form shadow-lg">
+                    <h3>Agregar Usuario</h3><br>
+                    <div class="mb-3">
+                        <label class="form-label" for="username">Usuario</label>
+                        <input class="form-control" type="text" id="username" name="username" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="password">Contraseña</label>
+                        <input class="form-control" type="password" id="password" name="password" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="passwordConfirmation">Confirmar contraseña</label>
+                        <input class="form-control" type="password" id="passwordConfirmation"
+                            name="passwordConfirmation" required>
+                    </div>
+
+                    <div>
+                        <label class="form-label" for="role">Rol</label>
+                        <select id="role" name="role" class="form-select form-select-lg mb-3" required>
+                            <option value="" selected>Elija el rol</option>
+                            <option value="ROLE_ADMIN">Administrador</option>
+                            <option value="ROLE_USER">Vendedor</option>
+                        </select>
+                    </div>
+
+                    <div class="buttons mt-4">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+
+                <!-- tabla de usuarios-->
+                <div class="info-card shadow-lg mt-4">
+                    <h4 class="mb-3">Lista de Usuarios</h4>
+
+                    <div id="tablaContainerUsuarios" class="table-responsive">
+                        <table id="tablaUsuarios" class="table table-hover align-middle">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Usuario</th>
+                                    <th>Rol</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <form id="formEliminarUsuario" action="/eliminarUsuario" method="POST">
+                        <input type="hidden" name="id" id="usuarioSeleccionadoId">
+                        <div class="modal-footer">
+                            <button type="submit" id="btnEliminarUsuario" class="btn btn-danger" disabled>Eliminar
+                                Usuario</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            // 🔹 Cargar usuarios al iniciar
+            function cargarUsuarios() {
+                $.ajax({
+                    url: '/obtenerUsuarios',
+                    method: 'GET',
+                    success: function (usuarios) {
+                        const tbody = $('#tablaUsuarios tbody');
+                        tbody.empty();
+
+                        if (usuarios.length > 0) {
+                            usuarios.forEach(u => {
+                                const rol = Array.from(u.roles)[0]; // toma el primer rol
+                                tbody.append(`
+                            <tr class="fila-usuario" data-id="${u.id}">
+                                <td>${u.id}</td>
+                                <td>${u.username}</td>
+                                <td>${rol}</td>
+                            </tr>
+                        `);
+                            });
+                        } else {
+                            tbody.append('<tr><td colspan="3" class="text-center text-muted">No hay usuarios registrados.</td></tr>');
+                        }
+                    }
+                });
+            }
+
+            cargarUsuarios(); // carga inicial
+
+            // 🔹 Seleccionar usuario
+            $(document).on('click', '.fila-usuario', function () {
+                $('.fila-usuario').removeClass('table-active');
+                $(this).addClass('table-active');
+
+                const id = $(this).data('id');
+                $('#usuarioSeleccionadoId').val(id);
+                $('#btnEliminarUsuario').prop('disabled', false);
+            });
+
+            // 🔹 Confirmar eliminación
+            $('#formEliminarUsuario').on('submit', function (e) {
+                e.preventDefault();
+                const id = $('#usuarioSeleccionadoId').val();
+                if (!id) return;
+
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: `Vas a eliminar el usuario con ID ${id}.`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.post('/eliminarUsuario', { id: id })
+                            .done(() => {
+                                Swal.fire('Eliminado', 'El usuario fue eliminado correctamente.', 'success');
+                                $('#btnEliminarUsuario').prop('disabled', true);
+                                cargarUsuarios(); // recargar tabla
+                            })
+                            .fail(() => {
+                                Swal.fire('Error', 'No se pudo eliminar el usuario.', 'error');
+                            });
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const links = document.querySelectorAll('.menu-item[href]');
+            const currentUrl = window.location.pathname;
+
+            links.forEach(link => {
+                if (link.getAttribute('href') === currentUrl) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+    <script>
+        // Espera 5 segundos y cierra las alertas si están visibles
+        setTimeout(function () {
+            const alertList = document.querySelectorAll('.alert');
+            alertList.forEach(function (alert) {
+                let bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                bsAlert.close();
+            });
+        }, 5000);
+    </script>
+</body>
+
+</html>
