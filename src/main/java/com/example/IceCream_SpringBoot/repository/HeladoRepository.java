@@ -9,7 +9,7 @@ import com.example.IceCream_SpringBoot.model.HeladoDocument;
 public interface HeladoRepository extends MongoRepository<HeladoDocument, String> {
     List<HeladoDocument> findByUbicacion(String ubicacion);
     List<HeladoDocument> findByUbicacionIn(List<String> ubicaciones);
-    List<HeladoDocument> findByNombre(String nombre);
+    List<HeladoDocument> findByNombreIgnoreCase(String nombre);
     boolean existsByNombre(String nombre);
-    Optional<HeladoDocument> findByNombreAndUbicacion(String nombre, String ubicacion);
+    Optional<HeladoDocument> findByNombreIgnoreCaseAndUbicacionIgnoreCase(String nombre, String ubicacion);
 }

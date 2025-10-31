@@ -12,16 +12,14 @@
 
 <body>
     <div class="main-container">
-        <!-- Sidebar -->
+      
         <div class="sidebar">
             <div th:replace="sidebar :: sidebar"></div>
         </div>
 
-        <!-- Contenido principal -->
         <div class="content-area">
             <div class="modal-footer">
-                <button onclick="window.location.href='/reporteOpciones'" type="button"
-                    class="btn btn-secondary">Regresar</button>
+                <button onclick="confirmarRegreso()" type="button" class="btn btn-secondary">Regresar</button>
             </div>
             <h1>Lista de Helados Disponibles</h1>
 
@@ -36,21 +34,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Iteramos sobre la lista de helados -->
                     <tr th:each="helado : ${helados}">
                         <td th:text="${helado.nombre}">Nombre del Helado</td>
                         <td th:text="${helado.sabor}">Sabor del Helado</td>
                         <td th:text="${helado.tipo}">Tipo de Helado</td>
-                        <td th:text="${helado.precio}">Precio del Helado</td>
+                        <!-- Agregamos las siglas COP al precio -->
+                        <td th:text="${helado.precio + ' COP'}">Precio del Helado</td>
                         <td th:text="${helado.unidades}">Unidades del Helado</td>
                     </tr>
                 </tbody>
             </table>
-
         </div>
     </div>
 
     <script>
+        function confirmarRegreso() {
+            if (confirm("¿Estás seguro de que quieres regresar?")) {
+                window.location.href = '/reporteOpciones';
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             const currentUrl = window.location.pathname;
             const linkMappings = {
@@ -82,7 +85,6 @@
             });
         });
     </script>
-
 
 </body>
 

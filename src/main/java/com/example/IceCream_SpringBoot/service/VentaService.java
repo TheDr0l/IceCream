@@ -36,8 +36,9 @@ public class VentaService {
             double totalEnviado,
             String nombreCliente,
             String cedula,
-            LocalDateTime fechaNacimiento,
+            String Email,
             String telefono,
+            LocalDateTime fechaNacimiento,
             String vendedor) {
 
         if (nombresHelados == null || unidadesPorHelado == null || nombresHelados.size() != unidadesPorHelado.size() || nombresHelados.isEmpty()) {
@@ -58,7 +59,7 @@ public class VentaService {
                 return false; // Cantidad invalida
             }
 
-            Optional<HeladoDocument> optHelado = heladoRepository.findByNombreAndUbicacion(nombreHelado, "heladeria");
+            Optional<HeladoDocument> optHelado = heladoRepository.findByNombreIgnoreCaseAndUbicacionIgnoreCase(nombreHelado, "heladeria");
 
             if (optHelado.isEmpty()) {
                 System.err.println("Error: Helado no encontrado - " + nombreHelado);
@@ -111,7 +112,7 @@ public class VentaService {
         if (clienteExistente != null) {
             cliente = clienteExistente;
         } else {
-            cliente = new Cliente(nombreCliente, cedula, fechaNacimiento.toLocalDate(), telefono);
+            cliente = new Cliente(nombreCliente, cedula, Email, telefono, fechaNacimiento.toLocalDate());
             clienteRepository.save(cliente);
         }
 

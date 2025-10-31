@@ -11,20 +11,17 @@
 
 <body>
     <div class="main-container">
-        <!-- Sidebar -->
         <div class="sidebar">
             <div th:replace="sidebar :: sidebar"></div>
         </div>
 
-        <!-- Contenido principal -->
         <div class="content-area">
             <div class="modal-footer">
-                <button onclick="window.location.href='/reporteOpciones'"
-                    class="btn btn-secondary ms-2">Regresar</button>
+                <button onclick="confirmarRegreso()" class="btn btn-secondary ms-2">Regresar</button>
             </div>
+
             <h2 class="mb-4 text-center">Últimas Ventas Registradas</h2>
 
-            <!-- Filtro por fecha -->
             <form class="row g-2 mb-4" method="get" action="/registroVentas">
                 <div class="col-md-3">
                     <input type="date" class="form-control" name="fechaDesde" placeholder="Desde">
@@ -39,7 +36,6 @@
                     <a href="/registroVentas" class="btn btn-primary">Limpiar</a>
                 </div>
             </form>
-
 
             <!--Info de resultados -->
             <p class="text-white">
@@ -81,7 +77,6 @@
                             </td>
                         </tr>
 
-                        <!--Si no hay ventas -->
                         <tr th:if="${ventasPage.totalElements == 0}">
                             <td colspan="6" class="text-center text-muted">No se encontraron ventas para este criterio.
                             </td>
@@ -94,8 +89,6 @@
             <div class="pagination-wrapper mt-4 d-flex justify-content-center">
                 <nav aria-label="Paginación" class="mt-4 d-flex justify-content-center">
                     <ul class="pagination">
-
-                        <!-- Logica de paginación por bloques -->
                         <th:block
                             th:with="blockSize=6,
                                 currentBlock=${currentPage / blockSize},
@@ -107,26 +100,30 @@
                                 <a class="page-link" th:href="@{/registroVentas(page=${startPage - blockSize})}">«</a>
                             </li>
 
-                            <!-- Numeros de página en el bloque actual -->
+                            <!-- Numeros de página -->
                             <li class="page-item" th:each="i : ${#numbers.sequence(startPage, endPage)}"
                                 th:classappend="${i == currentPage} ? 'active'">
                                 <a class="page-link" th:href="@{/registroVentas(page=${i})}" th:text="${i + 1}">1</a>
                             </li>
 
-                            <!-- Flecha hacia adelante por bloque -->
+                            <!-- Flecha hacia adelante -->
                             <li class="page-item" th:classappend="${endPage >= totalPages - 1} ? 'disabled'">
                                 <a class="page-link" th:href="@{/registroVentas(page=${startPage + blockSize})}">»</a>
                             </li>
-
                         </th:block>
                     </ul>
                 </nav>
             </div>
-
-
         </div>
     </div>
+
     <script>
+        function confirmarRegreso() {
+            if (confirm("¿Estás seguro de que quieres regresar?")) {
+                window.location.href = '/reporteOpciones';
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             const currentUrl = window.location.pathname;
             const linkMappings = {
@@ -145,11 +142,9 @@
             };
 
             const links = document.querySelectorAll('.menu-item[href]');
-
             links.forEach(link => {
                 const href = link.getAttribute('href');
                 const validPaths = linkMappings[href] || [];
-
                 if (validPaths.some(path => currentUrl.startsWith(path))) {
                     link.classList.add('active');
                 } else {

@@ -105,7 +105,7 @@ public class HeladoService {
                                               String nombreNuevo,
                                               String sabor,
                                               String tipo) {
-        List<HeladoDocument> helados = heladoRepository.findByNombre(nombreOriginal);
+        List<HeladoDocument> helados = heladoRepository.findByNombreIgnoreCase(nombreOriginal);
         if (!helados.isEmpty()) {
             for (HeladoDocument h : helados) {
                 h.setNombre(nombreNuevo);

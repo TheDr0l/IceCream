@@ -13,32 +13,27 @@
 
 <body>
     <div class="main-container">
-        <!-- Sidebar -->
         <div class="sidebar">
             <div th:replace="sidebar :: sidebar"></div>
         </div>
 
-        <!-- Contenido principal -->
         <div class="content-area">
             <div class="content-header">
                 <h1>Usuarios Internos</h1>
                 <p>Administradores y Vendedores</p>
             </div>
 
-            <!-- Mensaje de Éxito -->
             <div th:if="${mensaje}" class="alert alert-primary alert-dismissible fade show mt-3" role="alert">
                 <span th:text="${mensaje}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
             </div>
 
-            <!-- Mensaje de Error -->
             <div th:if="${error}" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
                 <span th:text="${error}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
             </div>
 
             <div class="form-container">
-                <!-- Formulario -->
                 <form action="/panelUsuariosInternos" method="POST" class="add-form shadow-lg">
                     <h3>Agregar Usuario</h3><br>
                     <div class="mb-3">
@@ -71,7 +66,6 @@
                     </div>
                 </form>
 
-                <!-- tabla de usuarios-->
                 <div class="info-card shadow-lg mt-4">
                     <h4 class="mb-3">Lista de Usuarios</h4>
 
@@ -108,7 +102,6 @@
     <script>
         $(document).ready(function () {
 
-            // 🔹 Cargar usuarios al iniciar
             function cargarUsuarios() {
                 $.ajax({
                     url: '/obtenerUsuarios',
@@ -119,7 +112,7 @@
 
                         if (usuarios.length > 0) {
                             usuarios.forEach(u => {
-                                const rol = Array.from(u.roles)[0]; // toma el primer rol
+                                const rol = Array.from(u.roles)[0]; 
                                 tbody.append(`
                             <tr class="fila-usuario" data-id="${u.id}">
                                 <td>${u.id}</td>
@@ -135,9 +128,9 @@
                 });
             }
 
-            cargarUsuarios(); // carga inicial
+            cargarUsuarios(); 
 
-            // 🔹 Seleccionar usuario
+       
             $(document).on('click', '.fila-usuario', function () {
                 $('.fila-usuario').removeClass('table-active');
                 $(this).addClass('table-active');
@@ -147,7 +140,7 @@
                 $('#btnEliminarUsuario').prop('disabled', false);
             });
 
-            // 🔹 Confirmar eliminación
+      
             $('#formEliminarUsuario').on('submit', function (e) {
                 e.preventDefault();
                 const id = $('#usuarioSeleccionadoId').val();
@@ -193,7 +186,6 @@
         });
     </script>
     <script>
-        // Espera 5 segundos y cierra las alertas si están visibles
         setTimeout(function () {
             const alertList = document.querySelectorAll('.alert');
             alertList.forEach(function (alert) {

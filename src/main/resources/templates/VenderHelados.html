@@ -7,6 +7,8 @@
     <title>Vender Helados</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/CSS_VenderHelados.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -51,7 +53,9 @@
                                 class="card-img-top helado-img" alt="helado">
                             <div class="card-body text-center">
                                 <h6 class="card-title mb-1" th:text="${helado.nombre}">Sabor</h6>
-                                <p class="card-text small mb-0" th:text="'$' + ${helado.precio}"></p>
+                                <p class="card-text small mb-0"
+                                    th:text="'$' + ${#numbers.formatDecimal(helado.precio, 1, 'COMMA', 2, 'POINT')} + ' COP'">
+                                </p>
                                 <p class="card-text small" th:text="'Disp: ' + ${helado.unidades}"></p>
                             </div>
 
@@ -103,12 +107,16 @@
                         <input id="nombreCliente" name="nombreCliente" class="form-control" type="text" required>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
-                        <input id="fechaNacimiento" name="fechaNacimiento" class="form-control" type="date" required>
+                        <label for="Email" class="form-label">Email:</label>
+                        <input id="Email" name="Email" class="form-control" type="email" required>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="telefono" class="form-label">Teléfono:</label>
                         <input id="telefono" name="telefono" class="form-control" type="text">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
+                        <input id="fechaNacimiento" name="fechaNacimiento" class="form-control" type="date" required>
                     </div>
                 </div>
             </fieldset>
@@ -123,16 +131,16 @@
                 </div>
                 <div class="col-md-6">
                     <label for="totalAPagarDisplay" class="form-label">Total a Pagar:</label>
-                    <input id="totalAPagarDisplay" class="form-control fw-bold" type="text" value="0.00 pesos" disabled
+                    <input id="totalAPagarDisplay" class="form-control fw-bold" type="text" value="0.00 COP" disabled
                         readonly>
                     <input type="hidden" id="totalAPagar" name="totalAPagar" value="0.00">
                 </div>
             </div>
 
             <div class="d-flex justify-content-end mt-4 gap-2">
-                <button onclick="window.location.href='/logout'" type="button" class="btn btn-outline-secondary">Cerrar
+                <button onclick="confirmarcerrarsesion()" type="button" class="btn btn-outline-secondary">Cerrar
                     Sesión</button>
-                <button type="submit" class="btn btn-primary">Vender</button>
+                <button type="button" class="btn btn-primary" onclick="confirmarVenta()">Vender</button>
             </div>
             <div id="carritoCamposOcultos"></div>
         </form>
@@ -141,8 +149,6 @@
     <script th:inline="javascript">
         let carrito = [];
         let heladoTemporalParaAgregar = null;
-
-        // Selecciona un helado al hacer clic en la tarjeta
         function prepararParaAgregar(cardElement) {
             const nombre = cardElement.getAttribute('data-nombre');
             const unidadesDisponibles = parseInt(cardElement.getAttribute('data-unidades'));
@@ -155,7 +161,6 @@
 
             heladoTemporalParaAgregar = { nombre, unidadesDisponibles, precio, tipo };
 
-            // Quitar selección previa y aplicar visual a la actual
             document.querySelectorAll('.helado-card.border-primary').forEach(c => c.classList.remove('border-primary', 'border-3'));
             cardElement.classList.add('border-primary', 'border-3', 'pulse');
 
@@ -305,13 +310,21 @@
                 })
                 .then(cliente => {
                     document.getElementById("nombreCliente").value = cliente.nombre;
-                    document.getElementById("fechaNacimiento").value = cliente.fechaNacimiento;
+                    document.getElementById("Email").value = cliente.email;
                     document.getElementById("telefono").value = cliente.telefono || "";
+
+                    if (cliente.fechaNacimiento) {
+                        const fecha = cliente.fechaNacimiento.includes("T")
+                            ? cliente.fechaNacimiento.split("T")[0]
+                            : cliente.fechaNacimiento;
+                        document.getElementById("fechaNacimiento").value = fecha;
+                    }
+
                     mostrarMensajeBusqueda("Cliente encontrado.", "success");
                 })
                 .catch(err => {
                     document.getElementById("nombreCliente").value = "";
-                    document.getElementById("fechaNacimiento").value = "";
+                    document.getElementById("Email").value = "";
                     document.getElementById("telefono").value = "";
                     mostrarMensajeBusqueda(err.message, "danger");
                 });
@@ -380,6 +393,117 @@
 
         });
     </script>
+    <script>
+        function confirmarcerrarsesion() {
+            const confirmacion = confirm("¿Seguro que desea cerrar sesión?");
+            if (confirmacion) {
+                window.location.href = '/logout';
+            }
+        }
+    </script>
+    <script th:inline="javascript">
+        let heladosPocoStock = /*[[${heladosPocoStock}]]*/[];
+        if (heladosPocoStock && heladosPocoStock.length > 0) {
+            let listaHTML = '<ul style="text-align:left;">';
+            heladosPocoStock.forEach(h => {
+                listaHTML += `<li>🍦 <b>${h.nombre}</b>: ${h.Unidades} unidades restantes</li>`;
+            });
+            listaHTML += '</ul>';
+
+            Swal.fire({
+                icon: 'warning',
+                title: '¡Pocas unidades disponibles!',
+                html: `
+                <p>Algunos helados están por agotarse:</p>
+                ${listaHTML}
+            `,
+                confirmButtonText: 'Entendido',
+                confirmButtonColor: '#f39c12',
+                background: '#fff8e1',
+                width: 500,
+            });
+        }
+    </script>
+    <script>
+        // Colorea los fondos de los helados según su stock
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll('.helado-card').forEach(card => {
+                const unidades = parseInt(card.getAttribute('data-unidades'));
+                if (unidades === 0) {
+                    card.style.backgroundColor = '#f5a5a5';
+                    card.style.borderColor = '#f28c8c';
+                } else if (unidades > 0 && unidades <= 5) {
+                    card.style.backgroundColor = '#ffe066';
+                    card.style.borderColor = '#ffd633';
+                }
+            });
+        });
+    </script>
+    <script>
+        function confirmarVenta() {
+            const nombre = document.getElementById("nombreCliente").value.trim();
+            const cedula = document.getElementById("cedula").value.trim();
+            const email = document.getElementById("Email").value.trim();
+            const telefono = document.getElementById("telefono").value.trim();
+            const total = document.getElementById("totalAPagarDisplay").value;
+
+            if (carrito.length === 0) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Carrito vacío",
+                    text: "Agrega al menos un helado antes de vender."
+                });
+                return;
+            }
+
+            if (!nombre || !cedula || !email) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Datos incompletos",
+                    text: "Por favor llena los datos del cliente antes de vender."
+                });
+                return;
+            }
+
+            // Construir detalle 
+            let detalle = "<ul style='text-align:left'>";
+            carrito.forEach(item => {
+                detalle += `<li><b>${item.nombre}</b> — ${item.cantidad} x $${item.precio.toFixed(2)} = <b>$${(item.cantidad * item.precio).toFixed(2)}</b></li>`;
+            });
+            detalle += "</ul>";
+
+            Swal.fire({
+                title: "Confirmar venta",
+                html: `
+            <div style='text-align:left'>
+                <p><b>Cliente:</b> ${nombre}</p>
+                <p><b>Cédula:</b> ${cedula}</p>
+                <p><b>Email:</b> ${email}</p>
+                <p><b>Teléfono:</b> ${telefono || "No especificado"}</p>
+                <hr>
+                <h6> Helados a vender:</h6>
+                ${detalle}
+                <hr>
+                <p><b>Total a pagar:</b> ${total}</p>
+            </div>
+        `,
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonText: "Confirmar venta",
+                cancelButtonText: "Cancelar",
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33"
+            }).then(result => {
+                if (result.isConfirmed) {
+                    // Envía el formulario
+                    document.getElementById("ventaForm").requestSubmit();
+                }
+            });
+        }
+    </script>
+
+
+
 
 </body>
 

@@ -97,7 +97,7 @@
     </div>
 
     <div class="sidebar-footer">
-        <a href="/logout" class="menu-item">
+        <a href="/logout" class="menu-item" onclick="return confirmarSalida();">
             <span class="menu-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-logout">
@@ -109,4 +109,9 @@
             <span class="menu-item-text">Cerrar Sesión</span>
         </a>
     </div>
+    <script>
+        function confirmarSalida() {
+            return confirm("¿Estás seguro de que quieres salir?");
+        }
+    </script>
 </div>

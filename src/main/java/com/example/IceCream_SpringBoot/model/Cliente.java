@@ -6,16 +6,18 @@ public class Cliente {
     
     private String nombre;
     private String cedula;
-    private LocalDate fechaNacimiento;
+    private String Email;
     private String telefono;
+    private LocalDate fechaNacimiento;
 
     public Cliente() {}
 
-    public Cliente(String nombre, String cedula, LocalDate fechaNacimiento, String telefono) {
+    public Cliente(String nombre, String cedula, String Email, String telefono, LocalDate fechaNacimiento) {
         this.nombre = nombre;
         this.cedula = cedula;
-        this.fechaNacimiento = fechaNacimiento;
+        this.Email = Email;
         this.telefono = telefono;
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     public String getNombre() {
@@ -34,12 +36,12 @@ public class Cliente {
         this.cedula = cedula;
     }
 
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
+    public String getEmail() {
+        return Email;
     }
 
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
+    public void setEmail(String Email) {
+        this.Email = Email;
     }
 
     public String getTelefono() {
@@ -48,6 +50,14 @@ public class Cliente {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
 }
