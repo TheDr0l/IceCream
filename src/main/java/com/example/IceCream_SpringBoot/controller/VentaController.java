@@ -135,7 +135,7 @@ public class VentaController {
             try {
                 // Generar PDF
                 byte[] pdfBytes = gnerateFacturapdf.generarFacturaPDF(
-                        nombreCliente, nombresHelados, unidadesVenderLista, telefono, Email, metodoPago, totalAPagar);
+                        nombreCliente, nombresHelados, unidadesVenderLista, Email, telefono, metodoPago, totalAPagar);
 
                 // Enviar el correo
                 correoService.enviarFactura(
