@@ -36,8 +36,8 @@ public class SecurityConfig {
         return authProvider;
     }
 
-    // Crea el AuthenticationManager, que maneja la autenticación.
-    // Usa el proveedor de autenticación (DaoAuthenticationProvider) para verificar
+    // gestor general que decide como y con que proveedor autenticar a un usuario.
+    // usa el proveedor de autenticación (DaoAuthenticationProvider) para verificar
     // usuarios.
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http,

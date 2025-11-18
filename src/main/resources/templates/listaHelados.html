@@ -36,10 +36,10 @@
                 <tbody>
                     <tr th:each="helado : ${helados}">
                         <td th:text="${helado.nombre}">Nombre del Helado</td>
-                        <td th:text="${helado.sabor}">Sabor del Helado</td>
+                        <td th:text="${helado.sabor}">Sabor del Helado</td> 
                         <td th:text="${helado.tipo}">Tipo de Helado</td>
                         <!-- Agregamos las siglas COP al precio -->
-                        <td th:text="${helado.precio + ' COP'}">Precio del Helado</td>
+                        <td th:text="${#numbers.formatInteger(helado.precio, 3, 'COMMA') + ' COP'}">Precio del Helado</td>
                         <td th:text="${helado.unidades}">Unidades del Helado</td>
                     </tr>
                 </tbody>
@@ -49,9 +49,7 @@
 
     <script>
         function confirmarRegreso() {
-            if (confirm("¿Estás seguro de que quieres regresar?")) {
-                window.location.href = '/reporteOpciones';
-            }
+            window.location.href = '/reporteOpciones';
         }
 
         document.addEventListener("DOMContentLoaded", function () {

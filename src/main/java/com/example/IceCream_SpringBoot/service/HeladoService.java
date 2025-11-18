@@ -1,6 +1,8 @@
 package com.example.IceCream_SpringBoot.service;
 
 import com.example.IceCream_SpringBoot.model.HeladoDocument;
+import com.example.IceCream_SpringBoot.model.HeladoEliminadoDocument;
+import com.example.IceCream_SpringBoot.repository.HeladoEliminadoRepository;
 import com.example.IceCream_SpringBoot.repository.HeladoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ public class HeladoService {
 
     @Autowired
     private HeladoRepository heladoRepository;
+
+    @Autowired
+    private HeladoEliminadoRepository heladoEliminadoRepository;
 
     public boolean heladoExiste(String nombre) {
         return heladoRepository.existsByNombre(nombre);
@@ -117,13 +122,18 @@ public class HeladoService {
     }
 
     public boolean eliminarHelado(String ubicacion, String nombre) {
-        Optional<HeladoDocument> optionalHelado = heladoRepository.findByUbicacion(ubicacion)
-            .stream()
-            .filter(h -> h.getNombre().equals(nombre))
-            .findFirst();
+        Optional<HeladoDocument> heladoOpt = heladoRepository.findByNombreAndUbicacion(nombre, ubicacion);
 
-        if (optionalHelado.isPresent()) {
-            heladoRepository.delete(optionalHelado.get());
+        if (heladoOpt.isPresent()) {
+            HeladoDocument helado = heladoOpt.get();
+
+            // Guardar en la colección de eliminados
+            HeladoEliminadoDocument eliminado = new HeladoEliminadoDocument(helado);
+            heladoEliminadoRepository.save(eliminado);
+
+            // Eliminar del almacén principal
+            heladoRepository.delete(helado);
+
             return true;
         }
         return false;

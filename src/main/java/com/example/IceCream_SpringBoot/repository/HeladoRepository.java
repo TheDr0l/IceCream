@@ -12,4 +12,5 @@ public interface HeladoRepository extends MongoRepository<HeladoDocument, String
     List<HeladoDocument> findByNombreIgnoreCase(String nombre);
     boolean existsByNombre(String nombre);
     Optional<HeladoDocument> findByNombreIgnoreCaseAndUbicacionIgnoreCase(String nombre, String ubicacion);
+    Optional<HeladoDocument> findByNombreAndUbicacion(String nombre, String ubicacion);
 }

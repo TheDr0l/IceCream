@@ -2,6 +2,8 @@ package com.example.IceCream_SpringBoot.controller;
 
 import com.example.IceCream_SpringBoot.model.HeladoDocument;
 import com.example.IceCream_SpringBoot.service.HeladoService;
+import com.example.IceCream_SpringBoot.service.WekaPredictorService;
+
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -186,4 +188,29 @@ public class HeladoController {
     public String verReporteOpciones() {
         return "reporteOpciones";
     }
+
+    @Autowired
+    private WekaPredictorService wekaPredictorService;
+
+    @GetMapping("/predecirSabor")
+    public String mostrarPaginaPrediccion() {
+        return "PredecirSabor";
+    }
+
+    @PostMapping("/predecirSabor")
+    @ResponseBody
+    public String predecirSabor(@RequestParam String tipo,
+            @RequestParam double precioUnitario,
+            @RequestParam double cantidad,
+            @RequestParam double edadCliente,
+            @RequestParam String metodoPago) {
+        try {
+            String sabor = wekaPredictorService.predecirSabor(tipo, precioUnitario, cantidad, edadCliente, metodoPago);
+            return "El modelo predice que el sabor será: " + sabor;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error al predecir el sabor: " + e.getMessage();
+        }
+    }
+
 }
