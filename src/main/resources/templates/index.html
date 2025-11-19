@@ -35,7 +35,7 @@
                             <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" />
                         </svg>
                     </div>
-                    <h3>Agregar Helado al Almacén</h3>
+                    <h3>Agregar Helado al Almacen</h3>
                     <p>Registra nuevos helados en el inventario interno</p>
                 </div>
 
@@ -56,7 +56,7 @@
                         </svg>
                     </div>
                     <h3>Mover Helado al Mostrador</h3>
-                    <p>Transfiere helados del almacén al mostrador</p>
+                    <p>Transfiere helados del almacen al mostrador</p>
                 </div>
 
                 <div class="action-card" onclick="location.href='/reporteOpciones'">
@@ -75,7 +75,7 @@
                     <p>Consulta inventarios y ventas registradas</p>
                 </div>
 
-                <div class="action-card" onclick="location.href='/predecirSabor'">
+                <div class="action-card" onclick="location.href='/panelPredictivo'">
                     <div class="action-card-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -87,7 +87,7 @@
                             <path d="M14 14l2 2" />
                         </svg>
                     </div>
-                    <h3>Predicción de Sabor</h3>
+                    <h3>Modelos de Prediccion</h3>
                     <p>Usa el modelo Weka para predecir el sabor del helado</p>
                 </div>
 
@@ -104,7 +104,7 @@
                         </svg>
                     </div>
                     <h3>Editar Helados</h3>
-                    <p>Modifica la información de los productos</p>
+                    <p>Modifica la informacion de los productos</p>
                 </div>
 
                 <div class="action-card" onclick="location.href='/eliminarHelado'">
@@ -135,7 +135,7 @@
                             <path d="M18 15l3 -3" />
                         </svg>
                     </div>
-                    <h3>Cerrar Sesión</h3>
+                    <h3>Cerrar Sesion</h3>
                     <p>Salir del sistema de manera segura</p>
                 </div>
             </div>
@@ -147,7 +147,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title fs-5">Ver Información</h2>
+                    <h2 class="modal-title fs-5">Ver Informacion</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -164,8 +164,8 @@
                                     <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" />
                                 </svg>
                             </div>
-                            <h3>Almacén</h3>
-                            <p>Ver inventario del almacén</p>
+                            <h3>Almacen</h3>
+                            <p>Ver inventario del almacen</p>
                         </a>
                         <a href="/heladosHeladeria" class="action-card" style="text-decoration: none;">
                             <div class="action-card-icon">
@@ -182,7 +182,7 @@
                                     <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" />
                                 </svg>
                             </div>
-                            <h3>Heladería</h3>
+                            <h3>Heladeria</h3>
                             <p>Ver helados en mostrador</p>
                         </a>
                         <a href="/registroVentas" class="action-card" style="text-decoration: none;">
@@ -200,7 +200,7 @@
                                     <path d="M12 17v1m0 -8v1" />
                                 </svg>
                             </div>
-                            <h3>Últimas Ventas</h3>
+                            <h3>ultimas Ventas</h3>
                             <p>Historial de ventas</p>
                         </a>
                         <a href="/reporte" class="action-card" style="text-decoration: none;">
@@ -219,7 +219,7 @@
                                 </svg>
                             </div>
                             <h3>Reporte</h3>
-                            <p>Análisis y estadísticas</p>
+                            <p>Analisis y estadisticas</p>
                         </a>
                     </div>
                 </div>
@@ -242,7 +242,7 @@
             }
             const url = await res.text(); // tu endpoint devuelve el link como texto
             if (!url) {
-                alert("No se generó la URL de Mercado Pago");
+                alert("No se genero la URL de Mercado Pago");
                 return;
             }
             window.location.href = url;
@@ -264,7 +264,7 @@
     </script>
     <script>
         function confirmarcerrarsesion() {
-            const confirmacion = confirm("¿Seguro que desea cerrar sesión?");
+            const confirmacion = confirm("¿Seguro que desea cerrar sesion?");
             if (confirmacion) {
                 window.location.href = '/logout';
             }

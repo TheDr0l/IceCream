@@ -15,7 +15,7 @@
     <div class="content-area">
         <div class="content-header text-center">
             <img src="/img/heladoCool.png" alt="Marca Helado" class="logo-img me-2">
-            <img src="/img/titulo.png" alt="Título Heladería" class="titulo-img">
+            <img src="/img/titulo.png" alt="Titulo Heladeria" class="titulo-img">
         </div>
 
         <form id="ventaForm" action="/venderHelados" method="post" class="form-venta">
@@ -86,7 +86,7 @@
             <div class="mt-4">
                 <h4>Carrito de Compra</h4>
                 <ul id="listaCarrito" class="list-group mb-3">
-                    <li class="list-group-item">El carrito está vacío.</li>
+                    <li class="list-group-item">El carrito esta vacio.</li>
                 </ul>
             </div>
 
@@ -95,7 +95,7 @@
                 <div id="mensajeBusquedaCliente" class="alert d-none mt-2"></div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="cedula" class="form-label">Cédula:</label>
+                        <label for="cedula" class="form-label">Cedula:</label>
                         <div class="input-group">
                             <input id="cedula" name="cedula" class="form-control" type="text" required>
                             <button type="button" class="btn btn-outline-primary"
@@ -111,7 +111,7 @@
                         <input id="Email" name="Email" class="form-control" type="email" required>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="telefono" class="form-label">Teléfono:</label>
+                        <label for="telefono" class="form-label">Telefono:</label>
                         <input id="telefono" name="telefono" class="form-control" type="text">
                     </div>
                     <div class="col-md-6 mb-3">
@@ -123,7 +123,7 @@
 
             <div class="row mt-4">
                 <div class="col-md-6">
-                    <label for="metodoPago" class="form-label">Método de Pago:</label>
+                    <label for="metodoPago" class="form-label">Metodo de Pago:</label>
                     <select id="metodoPago" name="metodoPago" class="form-select">
                         <option value="efectivo">Efectivo</option>
                         <option value="tarjeta">Tarjeta</option>
@@ -139,7 +139,7 @@
 
             <div class="d-flex justify-content-end mt-4 gap-2">
                 <button onclick="confirmarcerrarsesion()" type="button" class="btn btn-outline-secondary">Cerrar
-                    Sesión</button>
+                    Sesion</button>
                 <button type="button" class="btn btn-primary" onclick="confirmarVenta()">Vender</button>
             </div>
             <div id="carritoCamposOcultos"></div>
@@ -179,7 +179,7 @@
             const { nombre, unidadesDisponibles, precio, tipo } = heladoTemporalParaAgregar;
 
             if (isNaN(cantidad) || cantidad <= 0) {
-                mostrarError('errorCarrito', "Por favor, ingresa una cantidad válida.");
+                mostrarError('errorCarrito', "Por favor, ingresa una cantidad valida.");
                 return;
             }
 
@@ -212,7 +212,7 @@
             lista.innerHTML = '';
 
             if (carrito.length === 0) {
-                lista.innerHTML = '<li class="list-group-item">El carrito está vacío.</li>';
+                lista.innerHTML = '<li class="list-group-item">El carrito esta vacio.</li>';
             } else {
                 carrito.forEach((item, index) => {
                     const li = document.createElement('li');
@@ -248,7 +248,7 @@
             const nuevaCantidad = parseInt(nuevaCantidadStr);
 
             if (!item || isNaN(nuevaCantidad) || nuevaCantidad < 1 || nuevaCantidad > item.unidadesDisponiblesOriginal) {
-                mostrarError('errorCarrito', `Cantidad no válida para ${item.nombre}.`);
+                mostrarError('errorCarrito', `Cantidad no valida para ${item.nombre}.`);
                 renderizarCarrito();
                 return;
             }
@@ -299,7 +299,7 @@
         function buscarCliente() {
             const cedula = document.getElementById("cedula").value;
             if (!cedula) {
-                mostrarMensajeBusqueda("Ingrese una cédula.", "warning");
+                mostrarMensajeBusqueda("Ingrese una cedula.", "warning");
                 return;
             }
 
@@ -346,7 +346,7 @@
             });
         }
 
-        // Inicialización
+        // Inicializacion
         document.addEventListener("DOMContentLoaded", function () {
             renderizarCarrito();
             document.getElementById('metodoPago').addEventListener('change', actualizarTotalAPagarGeneral);
@@ -356,14 +356,14 @@
                 card.addEventListener('click', () => prepararParaAgregar(card));
             });
 
-            // Alertas Thymeleaf automáticas
+            // Alertas Thymeleaf automaticas
             document.querySelectorAll(".alert-success, .alert-danger").forEach(alert => {
                 if (alert.textContent.trim() !== "" && !alert.id) {
                     setTimeout(() => { alert.style.display = "none"; }, 5000);
                 }
             });
 
-            // Validación antes de enviar el formulario
+            // Validacion antes de enviar el formulario
             document.getElementById("ventaForm").addEventListener("submit", function (e) {
                 if (carrito.length === 0) {
                     e.preventDefault();
@@ -375,7 +375,7 @@
                 const divCampos = document.getElementById("carritoCamposOcultos");
                 divCampos.innerHTML = "";
 
-                // Crea los inputs ocultos con la información del carrito
+                // Crea los inputs ocultos con la informacion del carrito
                 carrito.forEach((item, index) => {
                     const inputNombre = document.createElement("input");
                     inputNombre.type = "hidden";
@@ -395,7 +395,7 @@
     </script>
     <script>
         function confirmarcerrarsesion() {
-            const confirmacion = confirm("¿Seguro que desea cerrar sesión?");
+            const confirmacion = confirm("¿Seguro que desea cerrar sesion?");
             if (confirmacion) {
                 window.location.href = '/logout';
             }
@@ -414,7 +414,7 @@
                 icon: 'warning',
                 title: '¡Pocas unidades disponibles!',
                 html: `
-                <p>Algunos helados están por agotarse:</p>
+                <p>Algunos helados estan por agotarse:</p>
                 ${listaHTML}
             `,
                 confirmButtonText: 'Entendido',
@@ -425,7 +425,7 @@
         }
     </script>
     <script>
-        // Colorea los fondos de los helados según su stock
+        // Colorea los fondos de los helados segun su stock
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll('.helado-card').forEach(card => {
                 const unidades = parseInt(card.getAttribute('data-unidades'));
@@ -450,7 +450,7 @@
             if (carrito.length === 0) {
                 Swal.fire({
                     icon: "warning",
-                    title: "Carrito vacío",
+                    title: "Carrito vacio",
                     text: "Agrega al menos un helado antes de vender."
                 });
                 return;
@@ -477,9 +477,9 @@
                 html: `
             <div style='text-align:left'>
                 <p><b>Cliente:</b> ${nombre}</p>
-                <p><b>Cédula:</b> ${cedula}</p>
+                <p><b>Cedula:</b> ${cedula}</p>
                 <p><b>Email:</b> ${email}</p>
-                <p><b>Teléfono:</b> ${telefono || "No especificado"}</p>
+                <p><b>Telefono:</b> ${telefono || "No especificado"}</p>
                 <hr>
                 <h6> Helados a vender:</h6>
                 ${detalle}
@@ -495,7 +495,7 @@
                 cancelButtonColor: "#d33"
             }).then(result => {
                 if (result.isConfirmed) {
-                    // Envía el formulario
+                    // Envia el formulario
                     document.getElementById("ventaForm").requestSubmit();
                 }
             });

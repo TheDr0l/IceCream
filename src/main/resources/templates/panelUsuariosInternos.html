@@ -147,13 +147,13 @@
                 if (!id) return;
 
                 Swal.fire({
-                    title: '¿Estás seguro?',
+                    title: '¿Estas seguro?',
                     text: `Vas a eliminar el usuario con ID ${id}.`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
                     cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Sí, eliminar',
+                    confirmButtonText: 'Si, eliminar',
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {

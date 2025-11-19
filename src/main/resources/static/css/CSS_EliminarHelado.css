@@ -37,7 +37,7 @@ h2 {
 
 #tablaContainer {
     max-height: 300px;
-    /* puedes ajustar el valor según tu diseño */
+    /* puedes ajustar el valor segun tu diseño */
     overflow-y: auto;
     overflow-x: auto;
     /* por si hay muchas columnas */

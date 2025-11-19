@@ -42,7 +42,7 @@ public class VentaService {
             String vendedor) {
 
         if (nombresHelados == null || unidadesPorHelado == null || nombresHelados.size() != unidadesPorHelado.size() || nombresHelados.isEmpty()) {
-            System.err.println("Error: Las listas de helados y unidades no coinciden o están vacías.");
+            System.err.println("Error: Las listas de helados y unidades no coinciden o estan vacias.");
             return false;
         }
 

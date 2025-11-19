@@ -92,7 +92,7 @@
 		</dependency>
 
 
-		<!-- Generación de PDF (iText 5.x) -->
+		<!-- Generacion de PDF (iText 5.x) -->
 		<dependency>
 			<groupId>com.itextpdf</groupId>
 			<artifactId>itextpdf</artifactId>

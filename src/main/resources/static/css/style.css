@@ -117,7 +117,7 @@ html, body {
     animation: fadeInUp 0.8s ease forwards;
 }
 
-/* Animación de entrada tipo fadeInUp */
+/* Animacion de entrada tipo fadeInUp */
 @keyframes fadeInUp {
     0% {
         opacity: 0;
@@ -145,6 +145,6 @@ html, body {
     }
 
     .cont-derecho {
-        height: auto; /* Altura mínima visible del fondo */
+        height: auto; /* Altura minima visible del fondo */
     }
 }

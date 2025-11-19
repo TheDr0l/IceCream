@@ -32,6 +32,23 @@ public class HeladoService {
         return true;
     }
 
+    public boolean sumarUnidadesAlmacen(String nombre, int unidadesExtra) {
+        // Buscamos el helado especificamente en el almacen
+        Optional<HeladoDocument> heladoOpt = heladoRepository.findByUbicacion("almacen")
+                .stream()
+                .filter(h -> h.getNombre().equalsIgnoreCase(nombre))
+                .findFirst();
+
+        if (heladoOpt.isPresent()) {
+            HeladoDocument helado = heladoOpt.get();
+            int nuevasUnidades = helado.getUnidades() + unidadesExtra;
+            helado.setUnidades(nuevasUnidades);
+            heladoRepository.save(helado);
+            return true;
+        }
+        return false; // El helado no existia en el almacen
+    }
+
     public boolean moverHeladoAHeladeria(String nombre, int unidadesMover) {
         Optional<HeladoDocument> optionalAlmacen = heladoRepository.findByUbicacion("almacen")
             .stream()
@@ -42,12 +59,12 @@ public class HeladoService {
             return false;
         }
 
-        // Quitar unidades del almacén
+        // Quitar unidades del almacen
         HeladoDocument heladoAlmacen = optionalAlmacen.get();
         heladoAlmacen.setUnidades(heladoAlmacen.getUnidades() - unidadesMover);
         heladoRepository.save(heladoAlmacen);
 
-        // Sumar o crear en heladería
+        // Sumar o crear en heladeria
         Optional<HeladoDocument> optionalHeladeria = heladoRepository.findByUbicacion("heladeria")
             .stream()
             .filter(h -> h.getNombre().equals(nombre))
@@ -127,11 +144,11 @@ public class HeladoService {
         if (heladoOpt.isPresent()) {
             HeladoDocument helado = heladoOpt.get();
 
-            // Guardar en la colección de eliminados
+            // Guardar en la coleccion de eliminados
             HeladoEliminadoDocument eliminado = new HeladoEliminadoDocument(helado);
             heladoEliminadoRepository.save(eliminado);
 
-            // Eliminar del almacén principal
+            // Eliminar del almacen principal
             heladoRepository.delete(helado);
 
             return true;

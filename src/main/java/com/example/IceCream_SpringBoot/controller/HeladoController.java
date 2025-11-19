@@ -2,6 +2,7 @@ package com.example.IceCream_SpringBoot.controller;
 
 import com.example.IceCream_SpringBoot.model.HeladoDocument;
 import com.example.IceCream_SpringBoot.service.HeladoService;
+import com.example.IceCream_SpringBoot.service.WekaPrecioService;
 import com.example.IceCream_SpringBoot.service.WekaPredictorService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class HeladoController {
@@ -20,16 +23,47 @@ public class HeladoController {
     @Autowired
     private HeladoService heladoService;
 
-    // 1) Agregar al almacén
+    @Autowired
+    private WekaPredictorService wekaPredictorService; // J48 (Sabor)
+
+    @Autowired
+    private WekaPrecioService wekaPrecioService; // M5P (Precio)
+
+    // 1) Agregar al almacen
     @GetMapping("/agregarAlAlmacen")
     public String agregarAlAlmacen(Model model) {
         List<HeladoDocument> helados = heladoService.getListaAlmacen();
+
+        // ESTADISTICAS
         int totalHelados = helados.size();
         int totalUnidades = helados.stream().mapToInt(HeladoDocument::getUnidades).sum();
 
         model.addAttribute("totalHelados", totalHelados);
         model.addAttribute("totalUnidades", totalUnidades);
+
+        // NUEVO: Enviamos la lista para el Dropdown
+        model.addAttribute("listaHelados", helados);
+
         return "agregarAlAlmacen";
+    }
+
+    @PostMapping("/sumarStockRapido")
+    public String sumarStockRapido(@RequestParam String nombreHelado,
+            @RequestParam int cantidad,
+            RedirectAttributes redirectAttributes) {
+
+        // Usamos el servicio que creamos en el paso anterior
+        boolean success = heladoService.sumarUnidadesAlmacen(nombreHelado, cantidad);
+
+        if (success) {
+            redirectAttributes.addFlashAttribute("mensaje",
+                    "Stock actualizado: Se agregaron " + cantidad + " unidades de " + nombreHelado);
+        } else {
+            redirectAttributes.addFlashAttribute("error",
+                    "Error: No se encontró el helado seleccionado.");
+        }
+
+        return "redirect:/agregarAlAlmacen";
     }
 
     @PostMapping("/agregarAlAlmacen")
@@ -49,16 +83,29 @@ public class HeladoController {
         if (success) {
             redirectAttributes.addFlashAttribute("mensaje", "Helado agregado correctamente.");
         } else {
-            redirectAttributes.addFlashAttribute("error", "Error al registrar el helado. Inténtalo de nuevo.");
+            redirectAttributes.addFlashAttribute("error", "Error al registrar el helado. Intentalo de nuevo.");
         }
 
         return "redirect:/agregarAlAlmacen";
     }
 
-    // 2) Mover helado del almacén a la heladería
+    // 2) Mover helado del almacen a la heladeria
     @GetMapping("/moverHelado")
     public String mostrarFormularioMoverHelado(Model model) {
-        model.addAttribute("helados", heladoService.getListaAlmacen());
+        // Obtenemos lo que hay en el almacen (para el dropdown)
+        List<HeladoDocument> listaAlmacen = heladoService.getListaAlmacen();
+
+        // Obtenemos lo que hay en la heladeria
+        List<HeladoDocument> listaHeladeria = heladoService.getListaHeladeria();
+
+        // Creamos un Mapa rapido: Nombre -> Cantidad en Heladeria
+        // Si el helado existe en heladeria, guarda sus unidades.
+        Map<String, Integer> stockHeladeriaMap = listaHeladeria.stream()
+                .collect(Collectors.toMap(HeladoDocument::getNombre, HeladoDocument::getUnidades));
+
+        model.addAttribute("helados", listaAlmacen);
+        model.addAttribute("stockHeladeriaMap", stockHeladeriaMap); // Enviamos el mapa a la vista
+
         return "MoverAheladeria";
     }
 
@@ -70,7 +117,7 @@ public class HeladoController {
         boolean success = heladoService.moverHeladoAHeladeria(nombreHelado, unidadesMover);
 
         if (success) {
-            redirectAttributes.addFlashAttribute("mensaje", "Helado movido correctamente a la heladería.");
+            redirectAttributes.addFlashAttribute("mensaje", "Helado movido correctamente a la heladeria.");
         } else {
             redirectAttributes.addFlashAttribute("error",
                     "Error al mover el helado. Verifica las unidades disponibles.");
@@ -162,7 +209,7 @@ public class HeladoController {
         return "redirect:/eliminarHelado";
     }
 
-    // 7) Manejo de parámetros faltantes
+    // 7) Manejo de parametros faltantes
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public String handleMissingParams(MissingServletRequestParameterException ex,
             HttpServletRequest request,
@@ -189,14 +236,13 @@ public class HeladoController {
         return "reporteOpciones";
     }
 
-    @Autowired
-    private WekaPredictorService wekaPredictorService;
-
-    @GetMapping("/predecirSabor")
-    public String mostrarPaginaPrediccion() {
-        return "PredecirSabor";
+    // 1. Vista unica para los dos modelos Weka
+    @GetMapping("/panelPredictivo")
+    public String mostrarPanelIA() {
+        return "PanelPredictivo";
     }
 
+    // 2. ENDPOINT AJAX PARA J48 (Predecir Sabor)
     @PostMapping("/predecirSabor")
     @ResponseBody
     public String predecirSabor(@RequestParam String tipo,
@@ -206,11 +252,22 @@ public class HeladoController {
             @RequestParam String metodoPago) {
         try {
             String sabor = wekaPredictorService.predecirSabor(tipo, precioUnitario, cantidad, edadCliente, metodoPago);
-            return "El modelo predice que el sabor será: " + sabor;
+            return "El modelo J48 predice que el cliente elegira: " + sabor.toUpperCase();
         } catch (Exception e) {
-            e.printStackTrace();
-            return "Error al predecir el sabor: " + e.getMessage();
+            return "Error: " + e.getMessage();
         }
     }
 
+    // 3. ENDPOINT AJAX PARA M5P (Predecir Precio)
+    @PostMapping("/predecirPrecio")
+    @ResponseBody
+    public String predecirPrecio(@RequestParam String sabor,
+            @RequestParam String tipo) {
+        try {
+            double precio = wekaPrecioService.predecirPrecio(sabor, tipo);
+            return String.format("El modelo M5P sugiere un precio de: $%.2f", precio);
+        } catch (Exception e) {
+            return "Error: " + e.getMessage();
+        }
+    }
 }

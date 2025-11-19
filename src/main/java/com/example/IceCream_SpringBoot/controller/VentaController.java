@@ -101,7 +101,7 @@ public class VentaController {
 
         String vendedor = principal.getName();
 
-        // Validación básica
+        // Validacion basica
         if (nombresHelados == null || unidadesVenderLista == null ||
                 nombresHelados.size() != unidadesVenderLista.size() || nombresHelados.isEmpty()) {
             redirectAttributes.addFlashAttribute("error",
@@ -141,10 +141,10 @@ public class VentaController {
                 correoService.enviarFactura(
                         Email,
                         "Factura de su compra 🍦",
-                        "Gracias por comprar en nuestra heladería. Adjuntamos su factura.",
+                        "Gracias por comprar en nuestra heladeria. Adjuntamos su factura.",
                         pdfBytes);
 
-                redirectAttributes.addFlashAttribute("mensaje", "¡Venta realizada con éxito!");
+                redirectAttributes.addFlashAttribute("mensaje", "¡Venta realizada con exito!");
 
                 // Verificar el stock de los helados vendidos
                 List<Map<String, Object>> heladosPocoStock = new ArrayList<>();

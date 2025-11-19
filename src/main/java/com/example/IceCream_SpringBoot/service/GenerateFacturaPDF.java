@@ -29,7 +29,7 @@ public class GenerateFacturaPDF {
             Image logo = cargarImagen("/static/img/heladoCool.png", 80, 80);
             Image titulo = cargarImagen("/static/img/titulo.png", 200, 70);
 
-            // Cabecera con logo + título
+            // Cabecera con logo + titulo
             PdfPTable headerTable = new PdfPTable(2);
             headerTable.setWidthPercentage(100);
             headerTable.setWidths(new int[] { 1, 2 });
@@ -47,7 +47,7 @@ public class GenerateFacturaPDF {
 
             document.add(Chunk.NEWLINE);
 
-            // --- TÍTULO PRINCIPAL ---
+            // --- TiTULO PRINCIPAL ---
             Paragraph tituloFactura = new Paragraph(
                     "FACTURA DE COMPRA",
                     new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD, new BaseColor(0, 102, 204)));
@@ -67,13 +67,13 @@ public class GenerateFacturaPDF {
             tablaDatos.addCell(celda("Cliente:", fontNormal, true));
             tablaDatos.addCell(celda(nombreCliente, fontNormal, false));
 
-            tablaDatos.addCell(celda("Teléfono:", fontNormal, true));
+            tablaDatos.addCell(celda("Telefono:", fontNormal, true));
             tablaDatos.addCell(celda(telefono, fontNormal, false));
 
             tablaDatos.addCell(celda("Email:", fontNormal, true));
             tablaDatos.addCell(celda(email, fontNormal, false));
 
-            tablaDatos.addCell(celda("Método de pago:", fontNormal, true));
+            tablaDatos.addCell(celda("Metodo de pago:", fontNormal, true));
             tablaDatos.addCell(celda(metodoPago, fontNormal, false));
 
             document.add(tablaDatos);
@@ -132,7 +132,7 @@ public class GenerateFacturaPDF {
         }
     }
 
-    // Método auxiliar para crear celdas
+    // Metodo auxiliar para crear celdas
     private PdfPCell celda(String texto, Font fuente, boolean esTitulo) {
         PdfPCell cell = new PdfPCell(new Phrase(texto, fuente));
         cell.setBorder(Rectangle.NO_BORDER);
@@ -141,11 +141,11 @@ public class GenerateFacturaPDF {
         return cell;
     }
 
-    // Método auxiliar para cargar imágenes de recursos
+    // Metodo auxiliar para cargar imagenes de recursos
     private Image cargarImagen(String ruta, float ancho, float alto) throws Exception {
         try (InputStream is = getClass().getResourceAsStream(ruta)) {
             if (is == null)
-                throw new Exception("No se encontró la imagen: " + ruta);
+                throw new Exception("No se encontro la imagen: " + ruta);
             Image img = Image.getInstance(is.readAllBytes());
             img.scaleToFit(ancho, alto);
             return img;

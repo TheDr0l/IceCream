@@ -12,7 +12,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Configura cacheo de imágenes en /static/img/
+        // Configura cacheo de imagenes en /static/img/
         registry.addResourceHandler("/img/**")
                 .addResourceLocations("classpath:/static/img/")
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS).cachePublic().immutable());

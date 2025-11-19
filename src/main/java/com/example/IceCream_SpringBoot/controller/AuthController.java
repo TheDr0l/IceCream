@@ -89,7 +89,7 @@ public class AuthController {
             model.addAttribute("error", "Error al eliminar el usuario.");
         }
 
-        // Recargamos la página para actualizar la tabla
+        // Recargamos la pagina para actualizar la tabla
         return "redirect:/panelUsuariosInternos";
     }
 

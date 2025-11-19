@@ -24,9 +24,9 @@
         <div class="content-area">
             <div class="content-header">
                 <h1>Editar Helado</h1>
-                <p>Modifica la información de un helado existente</p>
+                <p>Modifica la informacion de un helado existente</p>
             </div>
-            <!-- Éxito -->
+            <!-- exito -->
             <div th:if="${mensaje}" class="alert alert-primary alert-dismissible fade show mt-3" role="alert">
                 <span th:text="${mensaje}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
@@ -44,10 +44,10 @@
                 <form id="editarForm" method="post" action="/editarHelado" class="edit-form shadow-lg">
 
                     <div class="mb-3">
-                        <label for="ubicacionSelect" class="form-label">Ubicación</label>
+                        <label for="ubicacionSelect" class="form-label">Ubicacion</label>
                         <select id="ubicacionSelect" name="ubicacion" class="form-select" required>
-                            <option value="">Elija la ubicación</option>
-                            <option value="almacen">Almacén Interno</option>
+                            <option value="">Elija la ubicacion</option>
+                            <option value="almacen">Almacen Interno</option>
                             <option value="heladeria">Helados en el Mostrador</option>
                         </select>
                     </div>
@@ -94,7 +94,7 @@
                 <!-- Panel lateral decorativo -->
                 <div class="info-card shadow-lg">
                     <h4>Editar datos</h4>
-                    <p>Selecciona la ubicación y el helado para actualizar su información.</p>
+                    <p>Selecciona la ubicacion y el helado para actualizar su informacion.</p>
                     <div class="illustration">
                         <img src="/img/heladoCool.png" alt="Editar Helado">
                     </div>

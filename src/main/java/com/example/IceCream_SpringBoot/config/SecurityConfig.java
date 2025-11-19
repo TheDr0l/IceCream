@@ -37,7 +37,7 @@ public class SecurityConfig {
     }
 
     // gestor general que decide como y con que proveedor autenticar a un usuario.
-    // usa el proveedor de autenticación (DaoAuthenticationProvider) para verificar
+    // usa el proveedor de autenticacion (DaoAuthenticationProvider) para verificar
     // usuarios.
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http,
@@ -53,7 +53,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // público
+                        // publico
                         .requestMatchers("/","/homePage","/login", "/css/**", "/img/**").permitAll()
                         // rutas de ventas: solo USER
                         .requestMatchers("/venderHelados", "/venderHelados/**", "/buscarCliente").hasRole("USER")

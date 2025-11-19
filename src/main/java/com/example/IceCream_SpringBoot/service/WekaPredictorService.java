@@ -23,7 +23,7 @@ public class WekaPredictorService {
 
         ArrayList<Attribute> atributos = new ArrayList<>();
 
-        // 0. Clase objetivo: sabor (ÍNDICE 0)
+        // 0. Clase objetivo: sabor (iNDICE 0)
         ArrayList<String> sabores = new ArrayList<>();
         sabores.add("mango");
         sabores.add("vainilla");
@@ -40,7 +40,7 @@ public class WekaPredictorService {
         sabores.add("durazno");
         atributos.add(new Attribute("sabor", sabores));
 
-        // 1. Atributo: tipo (ÍNDICE 1)
+        // 1. Atributo: tipo (iNDICE 1)
         ArrayList<String> tipos = new ArrayList<>();
         tipos.add("paleta");
         tipos.add("vaso");
@@ -48,36 +48,36 @@ public class WekaPredictorService {
         tipos.add("galleta");
         atributos.add(new Attribute("tipo", tipos));
 
-        // 2. Atributo: precioUnitario (ÍNDICE 2)
+        // 2. Atributo: precioUnitario (iNDICE 2)
         atributos.add(new Attribute("precioUnitario"));
 
-        // 3. Atributo: cantidad (ÍNDICE 3)
+        // 3. Atributo: cantidad (iNDICE 3)
         atributos.add(new Attribute("cantidad"));
 
-        // 4. Atributo: edadCliente (ÍNDICE 4)
+        // 4. Atributo: edadCliente (iNDICE 4)
         atributos.add(new Attribute("edadCliente"));
 
-        // 5. Atributo: metodoPago (ÍNDICE 5)
+        // 5. Atributo: metodoPago (iNDICE 5)
         ArrayList<String> metodos = new ArrayList<>();
         metodos.add("efectivo");
         metodos.add("tarjeta");
         atributos.add(new Attribute("metodoPago", metodos));
 
-        // Crear estructura vacía
+        // Crear estructura vacia
         estructura = new Instances("HeladoPredictor", atributos, 0);
-        // Establecer el índice de la clase objetivo en 0
+        // Establecer el indice de la clase objetivo en 0
         estructura.setClassIndex(0); 
     }
 
     /**
-     * Predice el sabor de helado basado en los parámetros de entrada.
+     * Predice el sabor de helado basado en los parametros de entrada.
      * * @param tipo El tipo de helado ("paleta", "vaso", "cono", "galleta").
      * @param precioUnitario El precio del helado.
      * @param cantidad La cantidad de helados.
      * @param edadCliente La edad del cliente.
-     * @param metodoPago El método de pago ("efectivo", "tarjeta").
+     * @param metodoPago El metodo de pago ("efectivo", "tarjeta").
      * @return El sabor de helado predicho por el modelo.
-     * @throws Exception Si ocurre un error durante la clasificación.
+     * @throws Exception Si ocurre un error durante la clasificacion.
      */
     public String predecirSabor(String tipo, double precioUnitario, double cantidad,
                                 double edadCliente, String metodoPago) throws Exception {
@@ -86,9 +86,9 @@ public class WekaPredictorService {
         Instance instancia = new DenseInstance(6);
         instancia.setDataset(estructura);
 
-        // NOTA: El índice 0 (sabor) se deja sin establecer, ya que es el valor que se va a predecir.
+        // NOTA: El indice 0 (sabor) se deja sin establecer, ya que es el valor que se va a predecir.
 
-        // Asignar los valores de entrada a los índices correctos:
+        // Asignar los valores de entrada a los indices correctos:
         instancia.setValue(1, tipo);
         instancia.setValue(2, precioUnitario);
         instancia.setValue(3, cantidad);

@@ -20,7 +20,7 @@
             <div th:replace="sidebar :: sidebar"></div>
         </div>
         <div class="content-area">
-            <!-- Mensaje de éxito -->
+            <!-- Mensaje de exito -->
             <div th:if="${mensaje}" class="alert alert-primary alert-dismissible fade show mt-3" role="alert">
                 <span th:text="${mensaje}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
@@ -37,12 +37,12 @@
                     <h2>Eliminar Helado</h2>
 
                     <select id="ubicacionSelect" name="ubicacion" class="form-select form-select-lg mb-3" required>
-                        <option value="" selected>Elija la ubicación</option>
-                        <option value="almacen">Almacén</option>
-                        <option value="heladeria">Heladería</option>
+                        <option value="" selected>Elija la ubicacion</option>
+                        <option value="almacen">Almacen</option>
+                        <option value="heladeria">Heladeria</option>
                     </select>
 
-                    <!-- Tabla donde se mostrarán los helados -->
+                    <!-- Tabla donde se mostraran los helados -->
                     <div id="tablaContainer" class="table-responsive" style="display: none;">
                         <table id="tablaHelados" class="table table-hover align-middle">
                             <thead class="table-primary">
@@ -72,7 +72,7 @@
     <script>
         $(document).ready(function () {
 
-            // Cambiar ubicación
+            // Cambiar ubicacion
             $('#ubicacionSelect').on('change', function () {
                 const ubicacion = $(this).val();
                 $('#tablaContainer').hide();
@@ -117,7 +117,7 @@
                 $('#btnEliminar').prop('disabled', false);
             });
 
-            // Confirmar eliminación
+            // Confirmar eliminacion
             $('#btnEliminar').on('click', function (e) {
                 e.preventDefault();
                 const nombre = $('#nombreHeladoSeleccionado').val();
@@ -126,13 +126,13 @@
                 if (!nombre) return;
 
                 Swal.fire({
-                    title: '¿Estás seguro?',
+                    title: '¿Estas seguro?',
                     text: `Vas a eliminar el helado "${nombre}" de ${ubicacion}.`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
                     cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Sí, eliminar',
+                    confirmButtonText: 'Si, eliminar',
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {

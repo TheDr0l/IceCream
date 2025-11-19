@@ -1,5 +1,5 @@
 
-/* === Área de Contenido === */
+/* === area de Contenido === */
 .content-area {
   flex: 1;
   padding: 40px;
@@ -22,14 +22,6 @@
 
 .content-header p {
   color: #718096;
-}
-
-/* === Contenedor del Formulario === */
-.form-container {
-  display: grid;
-  grid-template-columns: 1fr 0.8fr;
-  gap: 30px;
-  align-items: start;
 }
 
 /* === Formulario === */
