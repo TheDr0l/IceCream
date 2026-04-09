@@ -3,11 +3,15 @@ package com.example.IceCream_SpringBoot.service;
 import com.example.IceCream_SpringBoot.model.User;
 import com.example.IceCream_SpringBoot.repository.UserRepository;
 
+import jakarta.annotation.PostConstruct;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import jakarta.annotation.PostConstruct;
+import java.util.Set;
 
 @Service
 public class AuthService {
@@ -53,6 +57,26 @@ public class AuthService {
             return true;
         }
         return false;
+    }
+
+    //pruebas
+    @PostConstruct
+    public void crearAdminPorDefecto() {
+
+        String adminUser = "admin";
+        String adminPass = "admin";
+
+        if (userRepository.findByUsername(adminUser).isEmpty()) {
+
+            User admin = new User();
+            admin.setUsername(adminUser);
+            admin.setPassword(passwordEncoder.encode(adminPass));
+            admin.setRoles(Set.of("ADMIN"));
+
+            userRepository.save(admin);
+
+            System.out.println("ADMIN creado");
+        }
     }
 
 }
