@@ -132,7 +132,7 @@
                     </div>
                 </div>
 
-             
+
                 <div class="col-md-4">
                     <div class="service-card" style="background-image: url('/img/homePage/vendedor.jpg');">
                         <div class="overlay"></div>
@@ -146,7 +146,7 @@
                     </div>
                 </div>
 
-           
+
                 <div class="col-md-4">
                     <div class="service-card" style="background-image: url('/img/homePage/redis.webp');">
                         <div class="overlay"></div>
@@ -229,6 +229,36 @@
         </div>
     </section>
 
+    <!-- ============================================================ -->
+    <!-- CHATBOT ICE CREAM                                            -->
+    <!-- ============================================================ -->
+
+    <!-- Boton flotante -->
+    <button id="chat-toggle" onclick="toggleChat()" title="Chatea con nosotros">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white" viewBox="0 0 24 24">
+            <path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z" />
+        </svg>
+    </button>
+
+    <!-- Ventana del chat -->
+    <div id="chat-window">
+        <div id="chat-header">
+            <span>Asistente Ice Cream</span>
+            <button onclick="toggleChat()" id="chat-close">✕</button>
+        </div>
+        <div id="chat-messages">
+            <div class="msg bot-msg">Hola, soy el asistente de Ice Cream. ¿En que te puedo ayudar?</div>
+        </div>
+        <div id="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Escribe tu pregunta..."
+                onkeydown="if(event.key==='Enter') sendMessage()" />
+            <button onclick="sendMessage()" id="chat-send">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" viewBox="0 0 24 24">
+                    <path d="M2 21l21-9L2 3v7l15 2-15 2z" />
+                </svg>
+            </button>
+        </div>
+    </div>
 
     <footer>
         <h5>© 2025 Ice Cream — Proyecto academico Universidad Tecnologico Comfenalco.</h5>
@@ -236,7 +266,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-  
+
         const testimonios = [
             { nombre: "Lucia Martinez", comentario: "¡Excelente servicio y los mejores helados!", estrellas: 5 },
             { nombre: "Carlos Gomez", comentario: "Buen sabor pero podrian mejorar los conos.", estrellas: 3 },
@@ -315,6 +345,55 @@
                 home.classList.remove('shrink');
             }
         });
+    </script>
+    <script>
+        function toggleChat() {
+            const win = document.getElementById('chat-window');
+            win.classList.toggle('open');
+            if (win.classList.contains('open')) {
+                document.getElementById('chat-input').focus();
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            appendMessage(text, 'user-msg');
+            input.value = '';
+
+            const typing = appendMessage('Escribiendo...', 'typing-msg');
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+
+                if (!response.ok) throw new Error('Error del servidor');
+                const reply = await response.text();
+                typing.remove();
+                appendMessage(reply, 'bot-msg');
+            } catch (e) {
+                typing.remove();
+                appendMessage('Hubo un error al conectar. Intenta de nuevo.', 'bot-msg');
+            }
+
+            const msgs = document.getElementById('chat-messages');
+            msgs.scrollTop = msgs.scrollHeight;
+        }
+
+        function appendMessage(text, cssClass) {
+            const msgs = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = 'msg ' + cssClass;
+            div.textContent = text;
+            msgs.appendChild(div);
+            msgs.scrollTop = msgs.scrollHeight;
+            return div;
+        }
     </script>
 </body>
 

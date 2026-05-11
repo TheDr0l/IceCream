@@ -4,10 +4,7 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -22,6 +19,7 @@ public class ChatController {
     @Value("classpath:/promptTemplates/userPromptTemplate.st")
     Resource userPromptTemplate;
 
+    // Endpoint existente
     @GetMapping("/email")
     public String emailResponse(@RequestParam("customerName") String customerName,
             @RequestParam("customerMessage") String customerMessage) {
@@ -36,4 +34,16 @@ public class ChatController {
                         .param("customerMessage", customerMessage))
                 .call().content();
     }
+
+    // Nuevo endpoint para el chatbot de la pagina principal
+    @PostMapping("/chat")
+    public String chat(@RequestBody ChatRequest request) {
+        return chatClient
+                .prompt()
+                .user(request.message())
+                .call()
+                .content();
+    }
+
+    public record ChatRequest(String message) {}
 }
