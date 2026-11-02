@@ -1,304 +1,415 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ICE CREAM</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <meta name="description"
+        content="Ice Cream es el sistema de gestión para heladerías que reúne ventas, inventario, clientes y predicciones en un solo lugar.">
+    <title>Ice Cream — Sistema de gestión para heladerías</title>
+    <link rel="icon" href="/img/heladoCool.png" type="image/png">
+    <link rel="stylesheet" href="/css/theme.css">
     <link rel="stylesheet" href="/css/CSS_HomePage.css">
-
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand d-flex align-items-center" href="#">
-                    <img src="/img/heladoCool.png" alt="#">
-                    ICE CREAM
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavAltMarkup">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav ms-auto">
-                        <a class="nav-link active" id="nav1" href="#">Inicio</a>
-                        <a class="nav-link" id="nav2" href="#">Sobre nosotros</a>
-                        <a class="nav-link" id="nav4" href="#">Servicios</a>
-                        <a class="nav-link" id="nav3" href="#">Nuestro Equipo</a>
-                        <a class="nav-link" id="nav5" href="#">Testimonios</a>
-                        <button class="buttom" onclick="window.location.href='/login'">Iniciar sesion</button>
-                    </div>
-                </div>
+    <header class="site-header" id="site-header">
+        <nav class="nav-shell" aria-label="Navegación principal">
+            <a class="brand" href="#home" aria-label="Ice Cream, ir al inicio">
+                <img src="/img/heladoCool.png" alt="" width="40" height="40">
+                <span>Ice Cream</span>
+            </a>
+
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">
+                <span class="nav-toggle-line"></span>
+                <span class="nav-toggle-line"></span>
+                <span class="nav-toggle-line"></span>
+                <span class="sr-only">Abrir menú</span>
+            </button>
+
+            <div class="nav-links" id="primary-navigation">
+                <a href="#home">Inicio</a>
+                <a href="#about-us">Nosotros</a>
+                <a href="#services">Servicios</a>
+                <a href="#our-team">Equipo</a>
+                <a href="#testimonials">Testimonios</a>
+                <a class="btn-nav" href="/login">Iniciar sesión</a>
             </div>
         </nav>
     </header>
 
-    <section id="home">
-        <div class="home-content">
-            <div>
-                <h1>ICE CREAM</h1>
-                <p>Un software de gestion diseñado especialmente para heladerias que optimiza el control
-                    administrativo, el almacenamiento de datos y la toma de decisiones, reduciendo perdidas economicas y
-                    mejorando la eficiencia del negocio.</p>
-                <div class="home-buttons">
-                    <button onclick="window.location.href='/login'">Iniciar Sesion</button>
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-inner">
+                <div class="hero-copy">
+                    <h1>Menos caos.<br>Más helado.</h1>
+                    <p>
+                        Ice Cream reúne ventas, inventario, clientes y predicciones en un solo sistema.
+                        Una herramienta creada para que tu heladería funcione con orden y decidas con datos reales.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="/login">Iniciar sesión</a>
+                        <a class="btn btn-ghost" href="#services">Conocer el sistema</a>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <img src="/img/heladoCool.png" alt="Mascota de Ice Cream con gafas y un helado" width="626"
+                        height="626">
                 </div>
             </div>
-            <div>
-                <img class="imagenhelado" src="/img/heladoCool.png" alt="paletadehelado">
+
+            <div class="flavor-rail" aria-label="Tipos de helado que controla el sistema">
+                <span class="flavor"><i class="flavor-dot dot-fresa"></i>Cono</span>
+                <span class="flavor"><i class="flavor-dot dot-menta"></i>Paleta</span>
+                <span class="flavor"><i class="flavor-dot dot-mango"></i>Vaso</span>
+                <span class="flavor"><i class="flavor-dot dot-uva"></i>Galleta</span>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="about-us">
-        <div>
-            <h1>Sobre nosotros</h1>
-            <p>Somos un grupo de desarrolladores con la iniciativa de crear Ice Cream, un software diseñado para
-                optimizar la gestion interna de las heladerias. Nuestro objetivo es ofrecer una herramienta moderna y
-                accesible que facilite el control de inventarios, la administracion de ventas y la reduccion de perdidas
-                economicas.</p>
-        </div>
-        <div>
-            <img src="/img/homePage/about us ice cream.png" alt="persona interactuando">
-        </div>
-    </section>
-
-    <section id="services">
-        <h1>Servicios</h1>
-        <p class="text-center mb-5">
-            Ice Cream ofrece un conjunto de herramientas diseñadas para optimizar la gestion integral de heladerias.
-        </p>
-
-        <div class="container">
-            <div class="row g-4">
-
-                <div class="col-md-4">
-                    <div class="service-card" style="background-image: url('/img/homePage/gestion.jpg');">
-                        <div class="overlay"></div>
-                        <div class="content">
-                            <h5>Gestion de Ventas</h5>
-                            <p>
-                                Controla todas las transacciones del negocio de forma rapida y segura.
-                                El panel del vendedor permite registrar ventas, aplicar descuentos y actualizar la
-                                disponibilidad de productos en tiempo real.
-                            </p>
-                        </div>
+        <section id="about-us" class="about">
+            <div class="section-inner">
+                <div class="about-grid">
+                    <div class="about-copy">
+                        <h2>Un proyecto pensado para el día a día de una heladería.</h2>
+                        <p>
+                            Somos estudiantes de Desarrollo de Software de la Universidad Tecnológica de Comfenalco.
+                            Construimos Ice Cream para que un negocio real pueda controlar su inventario, registrar
+                            ventas y entender sus datos sin depender de hojas de cálculo sueltas.
+                        </p>
+                        <ul class="about-points">
+                            <li>
+                                <span class="point-icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12l5 5l10 -10" />
+                                    </svg>
+                                </span>
+                                <span>Ventas registradas sin papeleo ni cuentas repetidas.</span>
+                            </li>
+                            <li>
+                                <span class="point-icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12l5 5l10 -10" />
+                                    </svg>
+                                </span>
+                                <span>Stock que se actualiza después de cada venta y traslado.</span>
+                            </li>
+                            <li>
+                                <span class="point-icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12l5 5l10 -10" />
+                                    </svg>
+                                </span>
+                                <span>Reportes y modelos predictivos para decidir qué vender mañana.</span>
+                            </li>
+                        </ul>
                     </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="service-card" style="background-image: url('/img/homePage/inventario.jpg');">
-                        <div class="overlay"></div>
-                        <div class="content">
-                            <h5>Manejo de Inventario</h5>
-                            <p>
-                                Supervisa el stock de productos, materias primas y toppings.
-                                El sistema actualiza automaticamente las existencias despues de cada venta, evitando
-                                perdidas por desabastecimiento o exceso.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="service-card" style="background-image: url('/img/homePage/databases.jpg');">
-                        <div class="overlay"></div>
-                        <div class="content">
-                            <h5>Base de Datos MongoDB</h5>
-                            <p>
-                                Ice Cream centraliza toda su informacion en <strong>MongoDB</strong>, garantizando
-                                seguridad en los datos y flexibilidad en el manejo de la informacion.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="service-card" style="background-image: url('/img/homePage/powerbi.png');">
-                        <div class="overlay"></div>
-                        <div class="content">
-                            <h5>Panel Estadistico</h5>
-                            <p>
-                                Visualiza metricas clave de tu negocio con una interfaz integrada de <strong>Power
-                                    BI</strong>.
-                                Graficos y estadisticas que ayudan a tomar decisiones basadas en datos reales.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-md-4">
-                    <div class="service-card" style="background-image: url('/img/homePage/vendedor.jpg');">
-                        <div class="overlay"></div>
-                        <div class="content">
-                            <h5>Panel de Vendedor</h5>
-                            <p>
-                                Una interfaz intuitiva para gestionar ventas, revisar inventario y consultar productos
-                                de manera eficiente desde un unico lugar.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-md-4">
-                    <div class="service-card" style="background-image: url('/img/homePage/redis.webp');">
-                        <div class="overlay"></div>
-                        <div class="content">
-                            <h5>Memoria RAM Virtual</h5>
-                            <p>
-                                Implementa una <strong>memoria en cache</strong> que acelera las consultas y operaciones
-                                frecuentes, garantizando un rendimiento superior y tiempos de respuesta mas rapidos.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-
-    <section id="our-team">
-        <h1>Nuestro Equipo</h1>
-        <p class="text-center">El grupo de estudiantes de sexto semestre del programa de Desarrollo de Software en la
-            Universidad Tecnologico Comfenalco, comprometidos con el desarrollo del proyecto <strong>Ice Cream</strong>.
-        </p>
-
-        <div class="container mt-5">
-            <div class="row g-4 justify-content-center">
-                <div class="col-md-3 col-sm-6">
-                    <div class="menu-card team-card">
-                        <img src="/img/homePage/perfil2.png" alt="Team member">
-                        <h6>Jean Paul Benavides</h6>
-                        <h2>Base de Datos</h2>
-                        <p>Encargado del mantenimiento, estructura y gestion de las bases de datos del sistema Ice
-                            Cream.</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="menu-card team-card">
-                        <img src="/img/homePage/perfil2.png" alt="Team member">
-                        <h6>Dilan Osorio</h6>
-                        <h2>Backend Developer</h2>
-                        <p>Responsable del desarrollo de la logica interna del sistema y la conexion con la base de
-                            datos.</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="menu-card team-card">
-                        <img src="/img/homePage/perfil2.png" alt="Team member">
-                        <h6>Oscar Taborda</h6>
-                        <h2>Frontend Developer</h2>
-                        <p>Diseña e implementa la interfaz de usuario del sistema, asegurando una experiencia atractiva
-                            e intuitiva.</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="menu-card team-card">
-                        <img src="/img/homePage/perfil2.png" alt="Team member">
-                        <h6>Sebastian Guzman</h6>
-                        <h2>Documentacion y Logica</h2>
-                        <p>Encargado de la documentacion del proyecto y la definicion de la logica de negocio del
-                            sistema Ice Cream.</p>
-                    </div>
+                    <figure class="about-media">
+                        <img src="/img/homePage/vendedor.jpg"
+                            alt="Vendedora entregando un helado a una persona en el mostrador" loading="lazy">
+                        <figcaption>Universidad Tecnológica de Comfenalco · Desarrollo de Software</figcaption>
+                    </figure>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="testimonials">
-        <h1>Testimonios</h1>
-        <p class="text-center mb-5">
-            Lo que nuestros usuarios opinan sobre <strong>Ice Cream</strong>.
-            Valoramos cada experiencia y seguimos mejorando para ofrecer el mejor servicio.
-        </p>
+        <section id="services" class="services">
+            <div class="section-inner">
+                <div class="services-head">
+                    <h2>Todo el local, en una sola pantalla.</h2>
+                    <p>
+                        Seis herramientas que trabajan juntas: desde el ingreso de un helado al almacén hasta el
+                        reporte que te dice qué está funcionando.
+                    </p>
+                </div>
 
-        <div class="container">
-            <div class="row g-4 justify-content-center" id="testimonials-container"></div>
+                <div class="services-layout">
+                    <figure class="services-media">
+                        <img src="/img/homePage/gestion.jpg"
+                            alt="Vitrina de heladería con varios sabores y conos" loading="lazy">
+                        <figcaption>Del almacén al mostrador, con el stock siempre a la vista.</figcaption>
+                    </figure>
 
-            <div class="text-center mt-4">
-                <button class="btn btn-outline-success" id="toggle-testimonials-btn">Ver mas</button>
+                    <div class="service-list">
+                        <article class="service-row">
+                            <span class="service-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-3 -2" />
+                                    <path d="M9 7h6" />
+                                    <path d="M9 11h6" />
+                                    <path d="M9 15h4" />
+                                </svg>
+                            </span>
+                            <div>
+                                <h3>Gestión de ventas</h3>
+                                <p>Registra cada transacción, aplica el recargo de tarjeta y actualiza la
+                                    disponibilidad en el mismo momento.</p>
+                            </div>
+                        </article>
+
+                        <article class="service-row">
+                            <span class="service-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M12 3l8 4.5v9l-8 4.5l-8 -4.5v-9z" />
+                                    <path d="M12 12l8 -4.5" />
+                                    <path d="M12 12v9" />
+                                    <path d="M12 12l-8 -4.5" />
+                                </svg>
+                            </span>
+                            <div>
+                                <h3>Manejo de inventario</h3>
+                                <p>Supervisa el almacén y el mostrador. El sistema descuenta unidades después de cada
+                                    venta y evita perder stock por desorden.</p>
+                            </div>
+                        </article>
+
+                        <article class="service-row">
+                            <span class="service-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <ellipse cx="12" cy="6" rx="8" ry="3" />
+                                    <path d="M4 6v6c0 1.7 3.6 3 8 3s8 -1.3 8 -3v-6" />
+                                    <path d="M4 12v6c0 1.7 3.6 3 8 3s8 -1.3 8 -3v-6" />
+                                </svg>
+                            </span>
+                            <div>
+                                <h3>Base de datos MongoDB</h3>
+                                <p>Toda la información del negocio se centraliza en MongoDB, con una estructura
+                                    flexible y consultas rápidas.</p>
+                            </div>
+                        </article>
+
+                        <article class="service-row">
+                            <span class="service-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M3 20h18" />
+                                    <path d="M6 16v-5" />
+                                    <path d="M11 16v-9" />
+                                    <path d="M16 16v-3" />
+                                    <path d="M21 16v-7" />
+                                </svg>
+                            </span>
+                            <div>
+                                <h3>Panel estadístico</h3>
+                                <p>Consulta métricas del negocio en un tablero de Power BI integrado. Los datos se
+                                    convierten en decisiones concretas.</p>
+                            </div>
+                        </article>
+
+                        <article class="service-row">
+                            <span class="service-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M3 5h18v12h-18z" />
+                                    <path d="M8 21h8" />
+                                    <path d="M12 17v4" />
+                                    <path d="M7 9h4" />
+                                    <path d="M7 12h7" />
+                                </svg>
+                            </span>
+                            <div>
+                                <h3>Panel del vendedor</h3>
+                                <p>Un punto de venta claro para elegir productos, armar el carrito, buscar al cliente y
+                                    cobrar sin pasos de más.</p>
+                            </div>
+                        </article>
+
+                        <article class="service-row">
+                            <span class="service-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M13 2l-8 12h6l-1 8l9 -13h-6z" />
+                                </svg>
+                            </span>
+                            <div>
+                                <h3>Memoria en caché</h3>
+                                <p>Las consultas frecuentes se resuelven más rápido con una capa de caché, para que el
+                                    sistema responda al ritmo del mostrador.</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <section id="our-team" class="team">
+            <div class="section-inner">
+                <div class="section-head">
+                    <h2>Las personas detrás de Ice Cream.</h2>
+                    <p>
+                        Estudiantes de sexto semestre del programa de Desarrollo de Software de la Universidad
+                        Tecnológica de Comfenalco, a cargo del diseño, los datos y la lógica del proyecto.
+                    </p>
+                </div>
+
+                <div class="team-grid">
+                    <article class="team-card">
+                        <span class="team-monogram mono-menta" aria-hidden="true">JP</span>
+                        <h3>Jean Paul Benavides</h3>
+                        <p class="team-role">Base de datos</p>
+                        <p class="team-bio">Mantenimiento, estructura y gestión de las bases de datos del sistema.</p>
+                    </article>
+
+                    <article class="team-card">
+                        <span class="team-monogram mono-fresa" aria-hidden="true">DO</span>
+                        <h3>Dilan Osorio</h3>
+                        <p class="team-role">Backend</p>
+                        <p class="team-bio">Desarrollo de la lógica interna y la conexión entre el sistema y los datos.</p>
+                    </article>
+
+                    <article class="team-card">
+                        <span class="team-monogram mono-mango" aria-hidden="true">OT</span>
+                        <h3>Óscar Taborda</h3>
+                        <p class="team-role">Frontend</p>
+                        <p class="team-bio">Diseño e implementación de la interfaz, con foco en una experiencia clara.</p>
+                    </article>
+
+                    <article class="team-card">
+                        <span class="team-monogram mono-uva" aria-hidden="true">SG</span>
+                        <h3>Sebastián Guzmán</h3>
+                        <p class="team-role">Documentación y lógica</p>
+                        <p class="team-bio">Documentación del proyecto y definición de las reglas de negocio.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="testimonials">
+            <div class="section-inner">
+                <div class="section-head">
+                    <h2>Lo que se dice en el mostrador.</h2>
+                    <p>Comentarios de quienes han probado el sistema y de clientes de la heladería.</p>
+                </div>
+
+                <div class="testimonial-grid" id="testimonials-container"></div>
+
+                <div class="testimonial-actions">
+                    <button class="btn btn-outline" id="toggle-testimonials-btn" type="button">Ver todos los
+                        testimonios</button>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- ============================================================ -->
     <!-- CHATBOT ICE CREAM                                            -->
     <!-- ============================================================ -->
 
-    <!-- Boton flotante -->
-    <button id="chat-toggle" onclick="toggleChat()" title="Chatea con nosotros">
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white" viewBox="0 0 24 24">
-            <path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z" />
+    <button id="chat-toggle" type="button" onclick="toggleChat()" title="Chatea con nosotros"
+        aria-label="Abrir chat de Ice Cream" aria-controls="chat-window" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15a2 2 0 0 1 -2 2h-7l-4 4v-4h-4a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2z" />
         </svg>
     </button>
 
-    <!-- Ventana del chat -->
-    <div id="chat-window">
+    <div id="chat-window" role="dialog" aria-modal="false" aria-labelledby="chat-title">
         <div id="chat-header">
-            <span>Asistente Ice Cream</span>
-            <button onclick="toggleChat()" id="chat-close">✕</button>
+            <span id="chat-title">Asistente Ice Cream</span>
+            <button onclick="toggleChat()" id="chat-close" type="button" aria-label="Cerrar chat">✕</button>
         </div>
-        <div id="chat-messages">
-            <div class="msg bot-msg">Hola, soy el asistente de Ice Cream. ¿En que te puedo ayudar?</div>
+        <div id="chat-messages" aria-live="polite">
+            <div class="msg bot-msg">Hola, soy el asistente de Ice Cream. ¿En qué te puedo ayudar?</div>
         </div>
         <div id="chat-input-area">
-            <input type="text" id="chat-input" placeholder="Escribe tu pregunta..."
+            <input type="text" id="chat-input" placeholder="Escribe tu pregunta..." aria-label="Mensaje para el asistente"
                 onkeydown="if(event.key==='Enter') sendMessage()" />
-            <button onclick="sendMessage()" id="chat-send">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" viewBox="0 0 24 24">
-                    <path d="M2 21l21-9L2 3v7l15 2-15 2z" />
+            <button onclick="sendMessage()" id="chat-send" type="button" aria-label="Enviar mensaje">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    aria-hidden="true">
+                    <path d="M22 2l-11 11" />
+                    <path d="M22 2l-7 20l-4 -9l-9 -4z" />
                 </svg>
             </button>
         </div>
     </div>
 
-    <footer>
-        <h5>© 2025 Ice Cream — Proyecto academico Universidad Tecnologico Comfenalco.</h5>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <a class="brand brand-footer" href="#home">
+                    <img src="/img/heladoCool.png" alt="" width="36" height="36">
+                    <span>Ice Cream</span>
+                </a>
+                <p>Sistema de gestión para heladerías. Proyecto académico de la Universidad Tecnológica de
+                    Comfenalco.</p>
+            </div>
+
+            <nav class="footer-nav" aria-label="Navegación del pie de página">
+                <a href="#about-us">Nosotros</a>
+                <a href="#services">Servicios</a>
+                <a href="#our-team">Equipo</a>
+                <a href="#testimonials">Testimonios</a>
+                <a href="/login">Iniciar sesión</a>
+            </nav>
+
+            <p class="footer-credit">© <span id="current-year">2026</span> Ice Cream. Todos los derechos
+                reservados.</p>
+        </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-
         const testimonios = [
-            { nombre: "Lucia Martinez", comentario: "¡Excelente servicio y los mejores helados!", estrellas: 5 },
-            { nombre: "Carlos Gomez", comentario: "Buen sabor pero podrian mejorar los conos.", estrellas: 3 },
-            { nombre: "Andrea Ruiz", comentario: "Todo delicioso, repetire seguro.", estrellas: 4 },
-            { nombre: "Miguel Torres", comentario: "Rapida atencion y sabores variados.", estrellas: 5 },
-            { nombre: "Sandra Lopez", comentario: "Me encanto el ambiente del local.", estrellas: 4 },
-            { nombre: "Fernando Perez", comentario: "Los precios un poco altos, pero vale la pena.", estrellas: 4 },
-            { nombre: "Juliana Ramirez", comentario: "Excelente software para la gestion del negocio.", estrellas: 5 },
-            { nombre: "Luis Hernandez", comentario: "Facil de usar y muy completo.", estrellas: 5 }
+            { nombre: "Lucía Martínez", comentario: "Excelente servicio y los mejores helados.", estrellas: 5 },
+            { nombre: "Carlos Gómez", comentario: "Buen sabor, aunque podrían mejorar los conos.", estrellas: 3 },
+            { nombre: "Andrea Ruiz", comentario: "Todo delicioso. Repetiré seguro.", estrellas: 4 },
+            { nombre: "Miguel Torres", comentario: "Atención rápida y sabores variados.", estrellas: 5 },
+            { nombre: "Sandra López", comentario: "Me encantó el ambiente del local.", estrellas: 4 },
+            { nombre: "Fernando Pérez", comentario: "Los precios son un poco altos, pero vale la pena.", estrellas: 4 },
+            { nombre: "Juliana Ramírez", comentario: "Excelente software para gestionar el negocio.", estrellas: 5 },
+            { nombre: "Luis Hernández", comentario: "Fácil de usar y muy completo.", estrellas: 5 }
         ];
 
         let mostrarTodo = false;
         const container = document.getElementById("testimonials-container");
         const toggleBtn = document.getElementById("toggle-testimonials-btn");
 
+        function initials(name) {
+            return name
+                .split(" ")
+                .slice(0, 2)
+                .map(part => part.charAt(0))
+                .join("")
+                .toUpperCase();
+        }
+
         function renderTestimonios() {
             container.innerHTML = "";
             const lista = mostrarTodo ? testimonios : testimonios.slice(0, 3);
 
-            lista.forEach(t => {
+            lista.forEach((t, index) => {
                 const estrellas = "★".repeat(t.estrellas) + "☆".repeat(5 - t.estrellas);
-                container.innerHTML += `
-            <div class="col-md-4 col-sm-6">
-                <div class="testimonial-card">
-                    <h5>${t.nombre}</h5>
-                    <p>"${t.comentario}"</p>
-                    <div class="testimonial-stars">${estrellas}</div>
-                </div>
-            </div>
-        `;
+                const card = document.createElement("article");
+                card.className = "testimonial-card";
+                card.innerHTML = `
+                    <div class="testimonial-stars" role="img" aria-label="${t.estrellas} de 5 estrellas">${estrellas}</div>
+                    <blockquote>“${t.comentario}”</blockquote>
+                    <footer>
+                        <span class="testimonial-avatar avatar-${(index % 4) + 1}" aria-hidden="true">${initials(t.nombre)}</span>
+                        <strong>${t.nombre}</strong>
+                    </footer>
+                `;
+                container.appendChild(card);
             });
 
-            toggleBtn.textContent = mostrarTodo ? "Ver menos" : "Ver mas";
+            toggleBtn.textContent = mostrarTodo ? "Ver menos" : "Ver todos los testimonios";
         }
 
         toggleBtn.addEventListener("click", () => {
@@ -308,86 +419,86 @@
 
         renderTestimonios();
 
+        // Navegación móvil
+        const header = document.getElementById("site-header");
+        const navToggle = document.querySelector(".nav-toggle");
+        const navLinks = document.getElementById("primary-navigation");
 
-        const sections = { nav1: 'home', nav2: 'about-us', nav3: 'our-team', nav4: 'services', nav5: 'testimonials' };
-        for (const [navId, sectionId] of Object.entries(sections)) {
-            document.getElementById(navId).addEventListener('click', (e) => {
-                e.preventDefault();
-                document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
-            });
-        }
-
-
-        const boton3 = document.getElementById("boton3");
-        if (boton3) boton3.addEventListener("click", () => alert("Ir a servicios"));
-
-        const boton4 = document.getElementById("boton4");
-        if (boton4) boton4.addEventListener("click", () => alert("Ir a testimonios"));
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                } else {
-                    entry.target.classList.remove('visible');
-                }
-            });
-        }, { threshold: 0.2 });
-
-        document.querySelectorAll('section').forEach(section => observer.observe(section));
-
-        window.addEventListener('scroll', () => {
-            const home = document.getElementById('home');
-            if (window.scrollY > 210) {
-                home.classList.add('shrink');
-            } else {
-                home.classList.remove('shrink');
-            }
+        navToggle.addEventListener("click", () => {
+            const isOpen = navLinks.classList.toggle("is-open");
+            navToggle.setAttribute("aria-expanded", String(isOpen));
+            document.body.classList.toggle("menu-open", isOpen);
         });
+
+        navLinks.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+                navLinks.classList.remove("is-open");
+                navToggle.setAttribute("aria-expanded", "false");
+                document.body.classList.remove("menu-open");
+            });
+        });
+
+        window.addEventListener("scroll", () => {
+            header.classList.toggle("is-scrolled", window.scrollY > 24);
+        }, { passive: true });
+
+        document.getElementById("current-year").textContent = new Date().getFullYear();
     </script>
+
     <script>
         function toggleChat() {
-            const win = document.getElementById('chat-window');
-            win.classList.toggle('open');
-            if (win.classList.contains('open')) {
-                document.getElementById('chat-input').focus();
+            const win = document.getElementById("chat-window");
+            const toggle = document.getElementById("chat-toggle");
+            win.classList.toggle("open");
+            const isOpen = win.classList.contains("open");
+            toggle.setAttribute("aria-expanded", String(isOpen));
+            if (isOpen) {
+                document.getElementById("chat-input").focus();
             }
         }
 
+        document.addEventListener("keydown", function (event) {
+            const win = document.getElementById("chat-window");
+            if (event.key === "Escape" && win.classList.contains("open")) {
+                toggleChat();
+                document.getElementById("chat-toggle").focus();
+            }
+        });
+
         async function sendMessage() {
-            const input = document.getElementById('chat-input');
+            const input = document.getElementById("chat-input");
             const text = input.value.trim();
             if (!text) return;
 
-            appendMessage(text, 'user-msg');
-            input.value = '';
+            appendMessage(text, "user-msg");
+            input.value = "";
 
-            const typing = appendMessage('Escribiendo...', 'typing-msg');
+            const typing = appendMessage("Escribiendo...", "typing-msg");
 
             try {
-                const response = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                const response = await fetch("/api/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ message: text })
                 });
 
-                if (!response.ok) throw new Error('Error del servidor');
+                if (!response.ok) throw new Error("Error del servidor");
                 const reply = await response.text();
                 typing.remove();
-                appendMessage(reply, 'bot-msg');
+                appendMessage(reply, "bot-msg");
             } catch (e) {
                 typing.remove();
-                appendMessage('Hubo un error al conectar. Intenta de nuevo.', 'bot-msg');
+                appendMessage("No pudimos conectar con el asistente. Intenta de nuevo.", "bot-msg");
             }
 
-            const msgs = document.getElementById('chat-messages');
+            const msgs = document.getElementById("chat-messages");
             msgs.scrollTop = msgs.scrollHeight;
         }
 
         function appendMessage(text, cssClass) {
-            const msgs = document.getElementById('chat-messages');
-            const div = document.createElement('div');
-            div.className = 'msg ' + cssClass;
+            const msgs = document.getElementById("chat-messages");
+            const div = document.createElement("div");
+            div.className = "msg " + cssClass;
             div.textContent = text;
             msgs.appendChild(div);
             msgs.scrollTop = msgs.scrollHeight;

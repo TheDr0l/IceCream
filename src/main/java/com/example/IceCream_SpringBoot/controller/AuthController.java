@@ -7,11 +7,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class AuthController {
@@ -39,18 +39,18 @@ public class AuthController {
             @RequestParam String password,
             @RequestParam String passwordConfirmation,
             @RequestParam String role,
-            Model model) {
+            RedirectAttributes redirectAttributes) {
         if (authService.usuarioExiste(username)) {
-            model.addAttribute("error", "El usuario ya existe");
+            redirectAttributes.addFlashAttribute("error", "El usuario ya existe");
             return "redirect:/panelUsuariosInternos";
         }
 
         boolean success = authService.registrarNuevoUsuario(username, password, passwordConfirmation, role);
 
         if (success) {
-            model.addAttribute("mensaje", "Usuario registrado correctamente.");
+            redirectAttributes.addFlashAttribute("mensaje", "Usuario registrado correctamente.");
         } else {
-            model.addAttribute("error", "Error al registrar el usuario.");
+            redirectAttributes.addFlashAttribute("error", "Error al registrar el usuario.");
         }
 
         return "redirect:/panelUsuariosInternos";
@@ -80,13 +80,13 @@ public class AuthController {
 
     // Eliminar usuario por ID
     @PostMapping("/eliminarUsuario")
-    public String eliminarUsuario(@RequestParam String id, Model model) {
+    public String eliminarUsuario(@RequestParam String id, RedirectAttributes redirectAttributes) {
         boolean eliminado = authService.eliminarUsuarioPorId(id);
 
         if (eliminado) {
-            model.addAttribute("mensaje", "Usuario eliminado correctamente.");
+            redirectAttributes.addFlashAttribute("mensaje", "Usuario eliminado correctamente.");
         } else {
-            model.addAttribute("error", "Error al eliminar el usuario.");
+            redirectAttributes.addFlashAttribute("error", "Error al eliminar el usuario.");
         }
 
         // Recargamos la pagina para actualizar la tabla

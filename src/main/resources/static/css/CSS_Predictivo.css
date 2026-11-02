@@ -1,0 +1,51 @@
+/* Ajustes propios de la pantalla Modelos predictivos */
+
+.panel-intro {
+    margin: 0 0 18px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--tinta-suave);
+}
+
+.result-box {
+    display: none;
+    margin-top: 18px;
+    padding: 14px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 1px solid var(--linea);
+    border-left: 3px solid var(--menta);
+    border-radius: 12px;
+    background: #fffdfa;
+}
+
+.result-box.is-visible {
+    display: block;
+}
+
+.result-box.is-success {
+    color: #2f5420;
+    background: #f1f9eb;
+    border-color: #cfe5c0;
+    border-left-color: var(--pistacho);
+}
+
+.result-box.is-error {
+    color: #8f1c2a;
+    background: #fdf0f2;
+    border-color: #f2c9cf;
+    border-left-color: var(--peligro);
+}
+
+.result-box.is-loading {
+    color: var(--tinta-suave);
+    background: var(--crema);
+    border-left-color: var(--mango);
+}
+
+.model-note {
+    margin: 22px 0 0;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--tinta-suave);
+}

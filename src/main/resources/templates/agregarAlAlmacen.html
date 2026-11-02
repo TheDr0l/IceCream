@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Helado al Almacen</title>
+    <title>Agregar helado — Ice Cream</title>
+    <link rel="icon" href="/img/heladoCool.png" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/theme.css">
     <link rel="stylesheet" href="/css/styleHome.css">
     <link rel="stylesheet" href="/css/CSS_AgregarAlAlmacen.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -13,128 +15,138 @@
 
 <body>
     <div class="main-container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div th:replace="sidebar :: sidebar"></div>
-        </div>
+        <aside class="sidebar">
+            <div th:replace="~{sidebar :: sidebar}"></div>
+        </aside>
 
-        <!-- Contenido principal -->
-        <div class="content-area">
-            <div class="content-header">
-                <h1>Agregar Helado al Almacen</h1>
-                <p>Registra nuevos helados en el inventario interno</p>
-            </div>
-            <!-- Mensaje de exito -->
-            <div th:if="${mensaje}" class="alert alert-primary alert-dismissible fade show mt-3" role="alert">
-                <span th:text="${mensaje}"></span>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-            </div>
-
-            <!-- Mensaje de Error -->
-            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                <span th:text="${error}"></span>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-            </div>
-            <div class="form-container">
-
-                <div class="card shadow-sm mb-4 border-primary">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0">Reposición Rápida</h5>
+        <main class="content-area">
+            <div class="admin-page">
+                <header class="content-header">
+                    <div>
+                        <h1>Agregar helado</h1>
+                        <p>Registra un producto nuevo o suma unidades a uno que ya está en el almacén.</p>
+                        <div class="page-meta">
+                            <span class="pill pill-neutral" th:text="${totalHelados} + ' helados registrados'">0 helados registrados</span>
+                            <span class="pill pill-menta" th:text="${totalUnidades} + ' unidades en almacén'">0 unidades en almacén</span>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <form action="/sumarStockRapido" method="POST" class="row g-3 align-items-end">
-                            <div class="col-md-7">
-                                <label class="form-label" for="nombreHelado">Seleccionar Helado Existente</label>
-                                <select class="form-select" id="nombreHelado" name="nombreHelado" required>
-                                    <option value="" selected disabled>Elige un helado...</option>
-                                    <option th:each="h : ${listaHelados}" th:value="${h.nombre}"
-                                        th:text="${h.nombre} + ' - ' + ${h.sabor} + ' (Stock actual: ' + ${h.unidades} + ')'">
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label" for="cantidad">Cantidad a sumar</label>
-                                <input class="form-control" type="number" id="cantidad" name="cantidad" min="1"
-                                    placeholder="+10" required>
-                            </div>
-                            <div class="col-md-2">
-                                <button type="submit" class="btn btn-success w-100">Sumar</button>
-                            </div>
-                        </form>
+                    <div class="header-actions">
+                        <a href="/home" class="btn btn-secondary">Volver al panel</a>
                     </div>
+                </header>
+
+                <div th:if="${mensaje}" class="alert alert-success alert-dismissible fade show" role="status">
+                    <span th:text="${mensaje}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
                 </div>
 
-                <div class="card shadow-lg">
-                    <div class="card-header">
-                        <h5 class="mb-0">Registrar Nuevo Producto</h5>
-                    </div>
-                    <div class="card-body">
-                        <form action="/agregarAlAlmacen" method="POST" class="add-form">
-                            <div class="mb-3">
-                                <label class="form-label" for="nombre">Nombre del Helado</label>
-                                <input class="form-control" type="text" id="nombre" name="nombre"
-                                    placeholder="Ej: Super Chocolate" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="sabor">Sabor</label>
-                                <input class="form-control" type="text" id="sabor" name="sabor" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="tipo">Tipo</label>
-                                <input class="form-control" type="text" id="tipo" name="tipo" required>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label" for="precio">Precio</label>
-                                    <input class="form-control" type="number" id="precio" name="precio" min="1"
-                                        required>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label" for="unidades">Unidades Iniciales</label>
-                                    <input class="form-control" type="number" id="unidades" name="unidades" min="1"
-                                        required>
-                                </div>
-                            </div>
-
-                            <div class="buttons mt-2">
-                                <button type="submit" class="btn btn-secondary">Registrar Nuevo</button>
-                            </div>
-                        </form>
-                    </div>
+                <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span th:text="${error}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
                 </div>
 
+                <div class="grid grid-2">
+                    <section class="panel" aria-labelledby="nuevo-producto-title">
+                        <div class="panel-header">
+                            <div>
+                                <h2 class="panel-title" id="nuevo-producto-title">Registrar producto nuevo</h2>
+                                <p class="panel-subtitle">El helado quedará disponible en el almacén.</p>
+                            </div>
+                        </div>
+
+                        <div class="panel-body">
+                            <form action="/agregarAlAlmacen" method="POST">
+                                <div class="form-grid">
+                                    <div class="span-2">
+                                        <label class="form-label" for="nombre">Nombre del helado</label>
+                                        <input class="form-control" type="text" id="nombre" name="nombre"
+                                            placeholder="Ej. Súper chocolate" required>
+                                    </div>
+
+                                    <div>
+                                        <label class="form-label" for="sabor">Sabor</label>
+                                        <input class="form-control" type="text" id="sabor" name="sabor"
+                                            placeholder="Chocolate" required>
+                                    </div>
+
+                                    <div>
+                                        <label class="form-label" for="tipo">Tipo</label>
+                                        <select class="form-select" id="tipo" name="tipo" required>
+                                            <option value="" selected disabled>Elige el tipo</option>
+                                            <option value="cono">Cono</option>
+                                            <option value="paleta">Paleta</option>
+                                            <option value="vaso">Vaso</option>
+                                            <option value="galleta">Galleta</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="form-label" for="precio">Precio</label>
+                                        <input class="form-control" type="number" id="precio" name="precio" min="1"
+                                            step="0.01" placeholder="4500" required>
+                                        <p class="form-text">En pesos colombianos (COP).</p>
+                                    </div>
+
+                                    <div>
+                                        <label class="form-label" for="unidades">Unidades iniciales</label>
+                                        <input class="form-control" type="number" id="unidades" name="unidades" min="1"
+                                            placeholder="24" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Registrar producto</button>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+
+                    <section class="panel" aria-labelledby="reposicion-title">
+                        <div class="panel-header">
+                            <div>
+                                <h2 class="panel-title" id="reposicion-title">Reposición rápida</h2>
+                                <p class="panel-subtitle">Suma unidades a un helado existente.</p>
+                            </div>
+                        </div>
+
+                        <div class="panel-body">
+                            <form action="/sumarStockRapido" method="POST">
+                                <div class="field-stack">
+                                    <div>
+                                        <label class="form-label" for="nombreHelado">Helado</label>
+                                        <select class="form-select" id="nombreHelado" name="nombreHelado" required>
+                                            <option value="" selected disabled>Elige un helado...</option>
+                                            <option th:each="h : ${listaHelados}" th:value="${h.nombre}"
+                                                th:text="${h.nombre} + ' · ' + ${h.sabor} + ' (stock: ' + ${h.unidades} + ')'">
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="form-label" for="cantidad">Cantidad a sumar</label>
+                                        <input class="form-control" type="number" id="cantidad" name="cantidad" min="1"
+                                            placeholder="10" required>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-success w-100">Sumar unidades</button>
+                                </div>
+                            </form>
+
+                            <p class="panel-note">La reposición suma unidades al stock actual del producto que
+                                elijas. No crea un helado nuevo.</p>
+                        </div>
+                    </section>
+                </div>
             </div>
-
-        </div>
-
+        </main>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const links = document.querySelectorAll('.menu-item[href]');
-            const currentUrl = window.location.pathname;
 
-            links.forEach(link => {
-                if (link.getAttribute('href') === currentUrl) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
-        });
-    </script>
     <script>
-        // Espera 5 segundos y cierra las alertas si estan visibles
         setTimeout(function () {
-            const alertList = document.querySelectorAll('.alert');
-            alertList.forEach(function (alert) {
-                let bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
-                bsAlert.close();
+            document.querySelectorAll('.alert').forEach(function (alert) {
+                bootstrap.Alert.getOrCreateInstance(alert).close();
             });
-        }, 5000);
+        }, 6000);
     </script>
 </body>
 
