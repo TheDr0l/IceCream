@@ -80,7 +80,7 @@ public class AuthController {
 
     // Eliminar usuario por ID
     @PostMapping("/eliminarUsuario")
-    public String eliminarUsuario(@RequestParam Long id, Model model) {
+    public String eliminarUsuario(@RequestParam String id, Model model) {
         boolean eliminado = authService.eliminarUsuarioPorId(id);
 
         if (eliminado) {

@@ -50,7 +50,7 @@ public class AuthService {
         return userRepository.findAll();
     }
 
-    public boolean eliminarUsuarioPorId(Long id) {
+    public boolean eliminarUsuarioPorId(String id) {
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
             return true;
@@ -63,14 +63,14 @@ public class AuthService {
     public void crearAdminPorDefecto() {
 
         String adminUser = "admin";
-        String adminPass = "admin";
+        String adminPass = "admin123";
 
         if (userRepository.findByUsername(adminUser).isEmpty()) {
 
             User admin = new User();
             admin.setUsername(adminUser);
             admin.setPassword(passwordEncoder.encode(adminPass));
-            admin.setRoles(Set.of("ADMIN"));
+            admin.setRoles(Set.of("ROLE_ADMIN"));
 
             userRepository.save(admin);
 

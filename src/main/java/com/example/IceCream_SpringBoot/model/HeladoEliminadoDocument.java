@@ -1,7 +1,7 @@
 package com.example.IceCream_SpringBoot.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import jakarta.persistence.Id;
 import java.time.LocalDateTime;
 
 @Document(collection = "heladosEliminados")

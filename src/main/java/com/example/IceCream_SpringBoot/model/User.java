@@ -1,25 +1,23 @@
 package com.example.IceCream_SpringBoot.model;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.Set;
 
-@Entity
-@Table(name = "users")
+@Document(collection = "users")
 public class User {
 
-    @Id 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Id
+    private String id;
 
-    @Column(name = "username", unique = true, nullable = false)
+    @Indexed(unique = true)
     private String username;
 
-    @Column(nullable = false)
     private String password;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "roles", joinColumns = @JoinColumn(name = "usuario_id"))
-    @Column(name = "rol")
     private Set<String> roles;
 
     public User() {
@@ -28,14 +26,14 @@ public class User {
     public User(String username, String password, String role) {
         this.username = username;
         this.password = password;
-        this.roles = Set.of(role); 
+        this.roles = Set.of(role);
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -47,6 +45,7 @@ public class User {
         this.username = usuario;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
