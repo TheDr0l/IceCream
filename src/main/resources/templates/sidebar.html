@@ -140,7 +140,7 @@
     </nav>
 
     <div class="sidebar-footer">
-        <a href="/logout" class="menu-item" onclick="return confirmarSalida();" title="Cerrar sesión">
+        <a href="/login" class="menu-item" onclick="cerrarSesion(); return false;" title="Cerrar sesión">
             <span class="menu-item-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -196,8 +196,18 @@
         })();
     </script>
     <script>
-        function confirmarSalida() {
-            return confirm("¿Estás seguro de que quieres salir?");
+        async function cerrarSesion() {
+            if (!confirm("¿Estás seguro de que quieres salir?")) {
+                return;
+            }
+            try {
+                await fetch('/api/auth/logout', {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json' }
+                });
+            } finally {
+                window.location.href = '/login?logout';
+            }
         }
     </script>
 
@@ -597,7 +607,10 @@
             try {
                 const response = await fetch('/api/admin/chat', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
                     body: JSON.stringify({ message: text })
                 });
 

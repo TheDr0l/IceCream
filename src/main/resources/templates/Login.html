@@ -56,15 +56,19 @@
                 <span th:text="${mensaje}">Cuenta creada. Ya puedes iniciar sesión.</span>
             </div>
 
-            <div th:if="${param.error}" class="auth-alert auth-alert-error" role="alert">
+            <div id="login-error" class="auth-alert auth-alert-error" role="alert" hidden>
                 Usuario o contraseña incorrectos. Revisa los datos e intenta de nuevo.
+            </div>
+
+            <div th:if="${param.expired}" class="auth-alert auth-alert-error" role="alert">
+                Tu sesión expiró. Inicia sesión de nuevo para continuar.
             </div>
 
             <div th:if="${param.logout}" class="auth-alert auth-alert-success" role="status">
                 Sesión cerrada correctamente.
             </div>
 
-            <form action="/login" method="post" class="auth-form">
+            <form id="loginForm" class="auth-form" novalidate>
                 <div class="auth-field">
                     <label for="username">Usuario</label>
                     <input type="text" id="username" name="username" autocomplete="username" required>
@@ -75,13 +79,65 @@
                     <input type="password" id="password" name="password" autocomplete="current-password" required>
                 </div>
 
-                <button type="submit" class="auth-submit">Entrar</button>
+                <button type="submit" id="loginSubmit" class="auth-submit">Entrar</button>
             </form>
 
             <p class="auth-note">Las cuentas de vendedor y administrador se crean desde el panel de usuarios
                 internos. Si necesitas acceso, pídeselo a un administrador.</p>
         </section>
     </main>
+
+    <script>
+        (function () {
+            const form = document.getElementById('loginForm');
+            const errorBox = document.getElementById('login-error');
+            const submitButton = document.getElementById('loginSubmit');
+
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault();
+                errorBox.hidden = true;
+
+                const username = form.username.value.trim();
+                const password = form.password.value;
+
+                if (!username || !password) {
+                    errorBox.textContent = 'Usuario y contraseña son obligatorios.';
+                    errorBox.hidden = false;
+                    return;
+                }
+
+                submitButton.disabled = true;
+                submitButton.textContent = 'Entrando...';
+
+                try {
+                    const response = await fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({ username: username, password: password })
+                    });
+
+                    if (!response.ok) {
+                        const problem = await response.json().catch(function () { return {}; });
+                        errorBox.textContent = problem.detail || 'Usuario o contraseña incorrectos. Revisa los datos e intenta de nuevo.';
+                        errorBox.hidden = false;
+                        return;
+                    }
+
+                    const session = await response.json();
+                    window.location.href = session.redirect || '/home';
+                } catch (error) {
+                    errorBox.textContent = 'No se pudo conectar con el servidor. Intenta de nuevo.';
+                    errorBox.hidden = false;
+                } finally {
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Entrar';
+                }
+            });
+        })();
+    </script>
 </body>
 
 </html>

@@ -33,7 +33,20 @@ Toda la informacion se almacena en **MongoDB Atlas**.
 
 3. En MongoDB Atlas, entra a **Network Access** y permite la IP desde la que se conecta la aplicacion. Para pruebas puedes usar `0.0.0.0/0`.
 
-4. Completa en `.env` las credenciales de correo y la API key de Groq si vas a usar esas funciones.
+4. Genera un secreto para firmar los JWT y agregalo a `.env`:
+
+   ```bash
+   openssl rand -base64 48
+   ```
+
+   ```properties
+   JWT_SECRET=el-secreto-generado
+   JWT_COOKIE_SECURE=false
+   ```
+
+   En produccion con HTTPS cambia `JWT_COOKIE_SECURE` a `true`.
+
+5. Completa en `.env` las credenciales de correo y la API key de Groq si vas a usar esas funciones.
 
 ## Ejecucion con Docker
 
@@ -92,9 +105,38 @@ El usuario `admin` se crea automaticamente al arrancar si no existe en la base d
    ./mvnw spring-boot:run
    ```
 
+## Autenticacion con JWT
+
+La aplicacion no usa formulario de login de Spring Security ni sesiones HTTP. La autenticacion es stateless:
+
+1. La pagina `/login` envia las credenciales a `POST /api/auth/login`.
+2. El servidor valida el usuario con BCrypt y devuelve un JWT firmado con HS256 (8 horas de vigencia).
+3. El token se guarda en una cookie `HttpOnly` (`icecream_token`, `SameSite=Lax`) para que las paginas Thymeleaf puedan autenticarse al navegar.
+4. Cada peticion se valida con un filtro de Spring Security. Tambien se acepta el token en la cabecera `Authorization: Bearer <token>` para clientes API.
+
+Endpoints:
+
+| Metodo | Ruta | Descripcion |
+|--------|------|-------------|
+| `POST` | `/api/auth/login` | Recibe `{"username","password"}` y devuelve `{"username","roles","redirect"}` |
+| `POST` | `/api/auth/logout` | Elimina la cookie del token |
+| `GET` | `/api/auth/me` | Devuelve el usuario y roles del token actual |
+
+Ejemplo con cabecera:
+
+```bash
+curl -X POST http://localhost:8080/api/auth/login \
+  -H 'Content-Type: application/json' \
+  -d '{"username":"admin","password":"admin123"}'
+```
+
+El logout solo elimina la cookie: al ser stateless no hay lista de revocacion, por lo que un token robado sigue siendo valido hasta que expira.
+
+La aplicacion mantiene CSRF desactivado y usa `SameSite=Lax` en la cookie. Si el sistema se publica junto a otros subdominios o aplicaciones del mismo sitio, conviene habilitar proteccion CSRF para las peticiones que modifican datos.
+
 ## Estructura de persistencia
 
-- `users`: usuarios y roles (autenticacion con Spring Security y BCrypt).
+- `users`: usuarios y roles (autenticacion con JWT y BCrypt).
 - `helados`: inventario disponible.
 - `heladosEliminados`: historial de productos eliminados.
 - `ventas`: ventas realizadas con sus clientes e items.

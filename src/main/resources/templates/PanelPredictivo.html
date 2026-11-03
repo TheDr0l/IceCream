@@ -167,7 +167,11 @@
             alertBox.textContent = "Consultando el modelo...";
 
             try {
-                const response = await fetch("/predecirSabor", { method: "POST", body: formData });
+                const response = await fetch("/predecirSabor", {
+                    method: "POST",
+                    headers: { "Accept": "application/json" },
+                    body: formData
+                });
                 const texto = await response.text();
                 mostrarResultado(alertBox, texto, texto.includes("Error"));
             } catch (err) {
@@ -184,7 +188,11 @@
             alertBox.textContent = "Calculando el precio...";
 
             try {
-                const response = await fetch("/predecirPrecio", { method: "POST", body: formData });
+                const response = await fetch("/predecirPrecio", {
+                    method: "POST",
+                    headers: { "Accept": "application/json" },
+                    body: formData
+                });
                 const texto = await response.text();
                 mostrarResultado(alertBox, texto, texto.includes("Error"));
             } catch (err) {

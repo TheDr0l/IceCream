@@ -424,7 +424,9 @@
                 return;
             }
 
-            fetch(`/buscarCliente?cedula=${encodeURIComponent(cedula)}`)
+            fetch(`/buscarCliente?cedula=${encodeURIComponent(cedula)}`, {
+                headers: { 'Accept': 'application/json' }
+            })
                 .then(res => {
                     if (!res.ok) throw new Error("Cliente no encontrado");
                     return res.json();
@@ -538,9 +540,16 @@
                 cancelButtonColor: '#6E5C55',
                 background: '#FFF8EE',
                 color: '#241A17'
-            }).then((result) => {
+            }).then(async (result) => {
                 if (result.isConfirmed) {
-                    window.location.href = '/logout';
+                    try {
+                        await fetch('/api/auth/logout', {
+                            method: 'POST',
+                            headers: { 'Accept': 'application/json' }
+                        });
+                    } finally {
+                        window.location.href = '/login?logout';
+                    }
                 }
             });
         }
