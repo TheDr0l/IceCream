@@ -1,14 +1,13 @@
-# Utilizamos una imagen base de OpenJDK
-FROM eclipse-temurin:17-jdk-jammy
-
-# Se define el directorio de la aplicacion dentro del contenedor
+# Etapa 1: Compilación
+FROM maven:3.9.9-eclipse-temurin-17 AS build
 WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Copiamos el archivo JAR al contenedor
-COPY target/IceCream-SpringBoot-0.0.1-SNAPSHOT.jar app.jar
-
-# Exponemos el puerto en el que corre la aplicacion (ajusta si es distinto)
+# Etapa 2: Ejecución
+FROM eclipse-temurin:17-jre-jammy
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
-
-# Comando para ejecutar la aplicacion
 ENTRYPOINT ["java", "-jar", "app.jar"]
