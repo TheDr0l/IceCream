@@ -1,5 +1,5 @@
 # Utilizamos una imagen base de OpenJDK
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk-jammy
 
 # Se define el directorio de la aplicacion dentro del contenedor
 WORKDIR /app
